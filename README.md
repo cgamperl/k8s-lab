@@ -23,7 +23,9 @@ helm install web lab/shop -n <name>-frontend --set role=frontend
 One chart deploys either component (`role: api` or `role: frontend`). The frontend
 reaches the API at `http://api.<name>-backend.svc.cluster.local:8080` unless
 `frontend.apiUrl` is set. `exposure.type` selects an OpenShift Route (default),
-a Kubernetes Ingress, or no external access. See `chart/shop/values.yaml` for all settings.
+a Kubernetes Ingress, or no external access. `shutdownDelaySeconds` (default 8) keeps a stopping pod serving until the router
+has removed it, so rolling updates do not interrupt requests. See
+`chart/shop/values.yaml` for all settings.
 
 The external order system runs outside the cluster and can serve one port per
 team, so that a firewall rule can affect a single team:

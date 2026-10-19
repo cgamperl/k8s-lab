@@ -56,6 +56,12 @@ spec:
               port: http
             initialDelaySeconds: 10
             periodSeconds: 10
+          {{- if gt (int .Values.shutdownDelaySeconds) 0 }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sleep", "{{ int .Values.shutdownDelaySeconds }}"]
+          {{- end }}
           resources:
             {{- toYaml $c.resources | nindent 12 }}
           securityContext:

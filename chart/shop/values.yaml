@@ -11,6 +11,12 @@ image:
 # Secrets for pulling from registries that require authentication.
 imagePullSecrets: []
 
+# Seconds a stopping api or frontend container keeps serving before it shuts
+# down (preStop hook), so that the router and the service stop sending it
+# requests first. Without it, requests fail for a few seconds during every
+# rolling update. 0 disables the hook.
+shutdownDelaySeconds: 8
+
 api:
   replicas: 2
   image:
