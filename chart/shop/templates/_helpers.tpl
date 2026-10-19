@@ -30,6 +30,22 @@ helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version }}
 {{- end }}
 {{- end }}
 
+{{/*
+Order system URL. Empty api.config.legacyUrl: in a namespace "p<NN>-..." the
+order system port is 8100 + NN (p03-backend -> 8103), otherwise 8081.
+*/}}
+{{- define "shop.legacyUrl" -}}
+{{- if .Values.api.config.legacyUrl -}}
+{{ .Values.api.config.legacyUrl }}
+{{- else -}}
+{{- $port := 8081 -}}
+{{- if regexMatch "^p[0-9]+-" .Release.Namespace -}}
+{{- $port = add 8100 (atoi (regexReplaceAll "^p0*([0-9]+)-.*$" .Release.Namespace "${1}")) -}}
+{{- end -}}
+{{ printf "http://%s:%d" .Values.api.config.legacyHost (int $port) }}
+{{- end -}}
+{{- end }}
+
 {{- define "shop.containerSecurityContext" -}}
 allowPrivilegeEscalation: false
 capabilities:

@@ -17,8 +17,10 @@ api:
     name: api
     tag: ""            # empty: the chart's appVersion
   config:
-    # External order system. 192.168.130.1 is the CRC host on the VM network.
-    legacyUrl: http://192.168.130.1:8081
+    # External order system. Empty: http://<legacyHost>:<port>, where the port is
+    # 8100 + NN in a namespace "p<NN>-..." (p03-backend -> 8103) and 8081 otherwise.
+    legacyUrl: ""
+    legacyHost: 192.168.130.1   # the CRC host on the VM network
     discountRate: "0.1"
   probes:
     readinessPath: /ready

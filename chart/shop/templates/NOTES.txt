@@ -7,5 +7,5 @@ URL: http://{{ .Values.exposure.host }}/
 {{- end }}
 {{- else }}
 API deployed in {{ .Release.Namespace }} as service api:8080 (http://api.{{ .Release.Namespace }}.svc.cluster.local:8080).
-Order system: {{ .Values.api.config.legacyUrl }}
+Order system: {{ include "shop.legacyUrl" . }}
 {{- end }}
