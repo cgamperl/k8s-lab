@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths: ["app/**", ".github/workflows/images.yaml"]
   workflow_dispatch:
+    inputs:
+      rebuild:
+        description: "Rebuild and overwrite tags that already exist"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -33,7 +38,19 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      # Published versions are frozen: a tag that exists is not built again,
+      # unless the workflow is started manually with rebuild=true.
+      - name: Check whether the tag exists
+        id: exists
+        run: |
+          ref=ghcr.io/${{ github.repository }}/${{ matrix.image }}:${{ matrix.tag }}
+          if docker buildx imagetools inspect "$ref" >/dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"; echo "$ref exists, not rebuilt"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: docker/build-push-action@v6
+        if: steps.exists.outputs.found == 'false' || inputs.rebuild
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/${{ matrix.file }}
