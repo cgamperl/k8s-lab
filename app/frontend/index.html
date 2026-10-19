@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop</title>
+<style>
+  :root { --accent: @ACCENT@; }
+  body { font-family: system-ui, sans-serif; margin: 0; background: #f4f5f7; color: #1d1f23; }
+  header { background: var(--accent); color: #fff; padding: 16px 24px; }
+  header h1 { margin: 0; font-size: 22px; }
+  main { padding: 24px; max-width: 900px; }
+  .meta { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin-bottom: 20px; }
+  .meta dt { color: #5b6270; }
+  .meta dd { margin: 0; font-family: ui-monospace, monospace; }
+  table { border-collapse: collapse; width: 100%; background: #fff; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #e3e5e9; }
+  .error { background: #fde8e8; color: #8a1c1c; padding: 12px 16px; border-left: 4px solid #c62828; white-space: pre-wrap; font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<header><h1>Shop &middot; Orders</h1></header>
+<main>
+  <dl class="meta">
+    <dt>Frontend version</dt><dd>@VERSION@</dd>
+    <dt>API version</dt><dd id="api-version">&ndash;</dd>
+    <dt>Answered by API pod</dt><dd id="api-pod">&ndash;</dd>
+    <dt>Last update</dt><dd id="updated">&ndash;</dd>
+  </dl>
+  <div id="content">Loading&hellip;</div>
+</main>
+<script>
+  const el = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  async function refresh() {
+    el('updated').textContent = new Date().toLocaleTimeString();
+    let resp, body;
+    try {
+      resp = await fetch('api/orders', { cache: 'no-store' });
+      const text = await resp.text();
+      try { body = JSON.parse(text); } catch { body = { error: text.trim().slice(0, 500) }; }
+    } catch (err) {
+      el('content').innerHTML = `<div class="error">Request failed: ${esc(err.message)}</div>`;
+      return;
+    }
+    el('api-version').textContent = body.api_version ?? '–';
+    el('api-pod').textContent = body.api_pod ?? '–';
+    if (!resp.ok) {
+      el('content').innerHTML = `<div class="error">HTTP ${resp.status} ${esc(resp.statusText)}\n${esc(body.error ?? '')}</div>`;
+      return;
+    }
+    const rows = body.orders.map((o) =>
+      `<tr><td>${esc(o.id)}</td><td>${esc(o.customer)}</td><td>${o.amount.toFixed(2)}</td><td>${o.total.toFixed(2)}</td></tr>`).join('');
+    el('content').innerHTML =
+      `<table><thead><tr><th>Order</th><th>Customer</th><th>Amount</th><th>Total after discount</th></tr></thead><tbody>${rows}</tbody></table>
+       <p>Source: ${esc(body.source)}</p>`;
+  }
+
+  refresh();
+  setInterval(refresh, 2000);
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+FROM docker.io/library/python:3.12-slim
+
+ARG APP_VERSION=dev
+ENV APP_VERSION=$APP_VERSION \
+    PYTHONUNBUFFERED=1 \
+    PORT=8080 \
+    LOG_FILE=/var/log/app/api.log
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py .
+# The log directory is normally an emptyDir volume; group 0 makes it writable
+# for the arbitrary UID that OpenShift assigns.
+RUN mkdir -p /var/log/app && chgrp -R 0 /var/log/app && chmod -R g=u /var/log/app
+
+USER 1001
+EXPOSE 8080
+CMD ["python", "app.py"]

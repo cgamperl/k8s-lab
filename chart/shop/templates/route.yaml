@@ -1,0 +1,20 @@
+{{- if and (eq (include "shop.name" .) "frontend") (eq .Values.exposure.type "route") }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: frontend
+  labels:
+    {{- include "shop.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.exposure.host }}
+  host: {{ . }}
+  {{- end }}
+  to:
+    kind: Service
+    name: frontend
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+{{- end }}

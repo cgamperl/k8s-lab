@@ -1,0 +1,59 @@
+# Which component this release deploys: "api" or "frontend".
+# The usual setup is two releases of this chart, for example
+#   helm install api shop -n <name>-backend
+#   helm install web shop -n <name>-frontend --set role=frontend
+role: api
+
+image:
+  registry: ghcr.io/cgamperl/k8s-lab
+  pullPolicy: IfNotPresent
+
+# Secrets for pulling from registries that require authentication.
+imagePullSecrets: []
+
+api:
+  replicas: 2
+  image:
+    name: api
+    tag: ""            # empty: the chart's appVersion
+  config:
+    # External order system. 192.168.130.1 is the CRC host on the VM network.
+    legacyUrl: http://192.168.130.1:8081
+    discountRate: "0.1"
+  probes:
+    readinessPath: /ready
+    livenessPath: /health
+  resources:
+    requests: { cpu: 50m, memory: 96Mi }
+    limits: { cpu: 500m, memory: 256Mi }
+
+# Copies the API's log file to its own standard output (kubectl logs -c log-sidecar).
+sidecar:
+  enabled: true
+  image:
+    name: log-sidecar
+    tag: "1.0.0"
+  resources:
+    requests: { cpu: 10m, memory: 16Mi }
+    limits: { cpu: 100m, memory: 32Mi }
+
+frontend:
+  replicas: 2
+  image:
+    name: frontend
+    tag: ""            # empty: the chart's appVersion
+  # Base URL of the API. Empty: http://api.<namespace>.svc.cluster.local:8080,
+  # where <namespace> is the release namespace with "-frontend" replaced by "-backend".
+  apiUrl: ""
+  probes:
+    readinessPath: /healthz
+    livenessPath: /healthz
+  resources:
+    requests: { cpu: 20m, memory: 32Mi }
+    limits: { cpu: 200m, memory: 64Mi }
+
+# How the frontend is reachable from outside: "route" (OpenShift), "ingress" or "none".
+exposure:
+  type: route
+  host: ""             # route: empty lets OpenShift generate <name>-<namespace>.<apps domain>; ingress: required
+  ingressClassName: ""

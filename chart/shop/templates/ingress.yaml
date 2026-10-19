@@ -1,0 +1,23 @@
+{{- if and (eq (include "shop.name" .) "frontend") (eq .Values.exposure.type "ingress") }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  labels:
+    {{- include "shop.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.exposure.ingressClassName }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  rules:
+    - host: {{ required "exposure.host is required for an ingress" .Values.exposure.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  name: http
+{{- end }}

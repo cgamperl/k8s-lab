@@ -1,0 +1,47 @@
+name: images
+
+on:
+  push:
+    branches: [main]
+    paths: ["app/**", ".github/workflows/images.yaml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { image: frontend,    tag: 1.0.0, context: app/frontend,    file: Containerfile,        accent: "#1f5fa8" }
+          - { image: frontend,    tag: 1.0.1, context: app/frontend,    file: Containerfile.alpine, accent: "#1f5fa8" }
+          - { image: frontend,    tag: 1.1.0, context: app/frontend,    file: Containerfile,        accent: "#2e7d32" }
+          - { image: api,         tag: 1.0.0, context: app/api,         file: Containerfile }
+          - { image: api,         tag: 1.1.0, context: app/api,         file: Containerfile }
+          - { image: backend,     tag: 1.1.0, context: app/api,         file: Containerfile }
+          - { image: log-sidecar, tag: 1.0.0, context: app/log-sidecar, file: Containerfile }
+          - { image: legacy,      tag: 1.0.0, context: app/legacy,      file: Containerfile }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/${{ matrix.file }}
+          push: true
+          tags: ghcr.io/${{ github.repository }}/${{ matrix.image }}:${{ matrix.tag }}
+          build-args: |
+            APP_VERSION=${{ matrix.tag }}
+            ACCENT=${{ matrix.accent || '#1f5fa8' }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.version=${{ matrix.tag }}

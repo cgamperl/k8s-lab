@@ -1,0 +1,6 @@
+apiVersion: v2
+name: shop
+description: Shop demo application (order API with log sidecar, web frontend) for Kubernetes and OpenShift exercises
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

@@ -1,0 +1,11 @@
+{{- if eq (include "shop.name" .) "frontend" }}
+Frontend deployed in {{ .Release.Namespace }}, API expected at {{ include "shop.apiUrl" . }}.
+{{- if eq .Values.exposure.type "route" }}
+URL: oc get route frontend -n {{ .Release.Namespace }} -o jsonpath='https://{.spec.host}{"\n"}'
+{{- else if eq .Values.exposure.type "ingress" }}
+URL: http://{{ .Values.exposure.host }}/
+{{- end }}
+{{- else }}
+API deployed in {{ .Release.Namespace }} as service api:8080 (http://api.{{ .Release.Namespace }}.svc.cluster.local:8080).
+Order system: {{ .Values.api.config.legacyUrl }}
+{{- end }}

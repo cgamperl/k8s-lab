@@ -1,0 +1,85 @@
+{{- $name := include "shop.name" . }}
+{{- $c := index .Values $name }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "shop.labels" . | nindent 4 }}
+spec:
+  replicas: {{ $c.replicas }}
+  selector:
+    matchLabels:
+      {{- include "shop.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "shop.selectorLabels" . | nindent 8 }}
+      {{- if eq $name "api" }}
+      annotations:
+        # Restart the pods when the configuration changes.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: {{ $name }}
+          image: {{ include "shop.image" (dict "root" . "image" $c.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+          {{- if eq $name "api" }}
+          envFrom:
+            - configMapRef:
+                name: api-config
+          {{- else }}
+          env:
+            - name: API_URL
+              value: {{ include "shop.apiUrl" . | quote }}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: {{ $c.probes.readinessPath }}
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: {{ $c.probes.livenessPath }}
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            {{- toYaml $c.resources | nindent 12 }}
+          securityContext:
+            {{- include "shop.containerSecurityContext" . | nindent 12 }}
+          {{- if eq $name "api" }}
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/app
+          {{- end }}
+        {{- if and (eq $name "api") .Values.sidecar.enabled }}
+        - name: log-sidecar
+          image: {{ include "shop.image" (dict "root" . "image" .Values.sidecar.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.sidecar.resources | nindent 12 }}
+          securityContext:
+            {{- include "shop.containerSecurityContext" . | nindent 12 }}
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/app
+              readOnly: true
+        {{- end }}
+      {{- if eq $name "api" }}
+      volumes:
+        - name: logs
+          emptyDir: {}
+      {{- end }}

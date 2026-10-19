@@ -1,0 +1,11 @@
+FROM docker.io/library/nginx:1.27-alpine
+
+ARG APP_VERSION=dev
+ARG ACCENT=#1f5fa8
+ENV API_URL=http://api:8080 \
+    NGINX_ENTRYPOINT_LOCAL_RESOLVERS=1
+
+COPY default.conf.template /etc/nginx/templates/default.conf.template
+COPY index.html /usr/share/nginx/html/index.html
+RUN sed -i -e "s|@VERSION@|$APP_VERSION|" -e "s|@ACCENT@|$ACCENT|" /usr/share/nginx/html/index.html
+EXPOSE 8080

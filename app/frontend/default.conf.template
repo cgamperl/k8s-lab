@@ -1,0 +1,24 @@
+# Rendered at container start by the nginx image's envsubst step; only
+# variables that exist in the environment (API_URL, NGINX_LOCAL_RESOLVERS)
+# are substituted, nginx variables such as $api_url stay as they are.
+server {
+    listen 8080;
+    root /usr/share/nginx/html;
+
+    location = /healthz {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    # /api/<path> is forwarded to <API_URL>/<path>. A variable in proxy_pass
+    # makes nginx resolve the name per request instead of only at startup.
+    location /api/ {
+        resolver ${NGINX_LOCAL_RESOLVERS} valid=10s ipv6=off;
+        set $api_url "${API_URL}";
+        rewrite ^/api/(.*)$ /$1 break;
+        proxy_pass $api_url;
+        proxy_connect_timeout 3s;
+        proxy_read_timeout 10s;
+    }
+}

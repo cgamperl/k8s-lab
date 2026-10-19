@@ -1,0 +1,6 @@
+FROM docker.io/library/busybox:1.37
+
+ENV LOG_FILE=/var/log/app/api.log
+USER 65534
+# -F keeps following the file when it is created later or rotated.
+CMD ["sh", "-c", "exec tail -n +1 -F \"$LOG_FILE\""]

@@ -1,0 +1,11 @@
+{{- if eq (include "shop.name" .) "api" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  labels:
+    {{- include "shop.labels" . | nindent 4 }}
+data:
+  LEGACY_URL: {{ .Values.api.config.legacyUrl | quote }}
+  DISCOUNT_RATE: {{ .Values.api.config.discountRate | quote }}
+{{- end }}
