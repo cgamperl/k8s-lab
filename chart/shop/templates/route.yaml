@@ -1,4 +1,4 @@
-{{- if and (eq (include "shop.name" .) "frontend") (eq .Values.exposure.type "route") }}
+{{- if and (eq (include "shop.name" .) "frontend") (eq (include "shop.exposureType" .) "route") }}
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:

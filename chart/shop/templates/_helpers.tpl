@@ -46,6 +46,36 @@ order system port is 8100 + NN (p03-backend -> 8103), otherwise 8081.
 {{- end -}}
 {{- end }}
 
+{{/* Effective exposure type: "auto" becomes "route" on OpenShift, otherwise "ingress". */}}
+{{- define "shop.exposureType" -}}
+{{- if eq .Values.exposure.type "auto" -}}
+{{- if .Capabilities.APIVersions.Has "route.openshift.io/v1" }}route{{ else }}ingress{{ end -}}
+{{- else -}}
+{{ .Values.exposure.type }}
+{{- end -}}
+{{- end }}
+
+{{/*
+Ingress host: exposure.host, else frontend-<namespace>.<domain>, where the
+domain is exposure.domain or the key "domain" of the ConfigMap shop-defaults in
+the release namespace (lookup; empty in helm template and client-side dry runs).
+*/}}
+{{- define "shop.ingressHost" -}}
+{{- if .Values.exposure.host -}}
+{{ .Values.exposure.host }}
+{{- else -}}
+{{- $domain := .Values.exposure.domain -}}
+{{- if not $domain -}}
+{{- $cm := lookup "v1" "ConfigMap" .Release.Namespace "shop-defaults" -}}
+{{- $domain = dig "data" "domain" "" ($cm | default dict) -}}
+{{- end -}}
+{{- if not $domain -}}
+{{- fail "an ingress needs exposure.host or exposure.domain (or a ConfigMap shop-defaults with the key domain in the release namespace)" -}}
+{{- end -}}
+{{ printf "frontend-%s.%s" .Release.Namespace $domain }}
+{{- end -}}
+{{- end }}
+
 {{- define "shop.containerSecurityContext" -}}
 allowPrivilegeEscalation: false
 capabilities:

@@ -1,4 +1,4 @@
-{{- if and (eq (include "shop.name" .) "frontend") (eq .Values.exposure.type "ingress") }}
+{{- if and (eq (include "shop.name" .) "frontend") (eq (include "shop.exposureType" .) "ingress") }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -10,7 +10,7 @@ spec:
   ingressClassName: {{ . }}
   {{- end }}
   rules:
-    - host: {{ required "exposure.host is required for an ingress" .Values.exposure.host }}
+    - host: {{ include "shop.ingressHost" . }}
       http:
         paths:
           - path: /

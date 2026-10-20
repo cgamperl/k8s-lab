@@ -60,8 +60,14 @@ frontend:
     requests: { cpu: 20m, memory: 32Mi }
     limits: { cpu: 200m, memory: 64Mi }
 
-# How the frontend is reachable from outside: "route" (OpenShift), "ingress" or "none".
+# How the frontend is reachable from outside: "auto", "route" (OpenShift), "ingress" or "none".
+# auto: a Route if the cluster serves route.openshift.io/v1, otherwise an Ingress.
 exposure:
-  type: route
-  host: ""             # route: empty lets OpenShift generate <name>-<namespace>.<apps domain>; ingress: required
+  type: auto
+  # route: empty lets OpenShift generate frontend-<namespace>.<apps domain>.
+  # ingress: empty means frontend-<namespace>.<domain> (see domain).
+  host: ""
+  # Domain for the generated Ingress host. Empty: the key "domain" of the
+  # ConfigMap shop-defaults in the release namespace, if it exists.
+  domain: ""
   ingressClassName: ""
