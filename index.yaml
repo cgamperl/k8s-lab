@@ -3,10 +3,10 @@ entries:
   shop:
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2026-10-19T20:03:35.2381886+02:00"
+    created: "2026-10-20T11:09:07.6565517+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: d26aa8c04f7f641428cf645858baa6372717fdc23e98da190fc00251a23ad19c
+    digest: a33b30383437df86931cf44d1e5384e78f17e4c8e7740b49b2b5cc58e64d23a7
     name: shop
     type: application
     urls:
@@ -14,10 +14,10 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2317545+02:00"
+    created: "2026-10-20T11:09:07.6502268+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: 95bc8dff01adafdbfd24a8d6826c4ad2f0ee9c85111b371ff13b64744e39ce5a
+    digest: 0e47d47f12cbebcac00b4a34b339237b107482a4bb622b535ccdd0e52483841e
     name: shop
     type: application
     urls:
@@ -25,10 +25,10 @@ entries:
     version: 1.0.11
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2312317+02:00"
+    created: "2026-10-20T11:09:07.6497158+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: 5aaa1b4329af1783698a6e36daa842c2e853551fd82b43a10b776ee34343c897
+    digest: fd3fa00008129466665dca676e85c3d5261ae93e71a71f4b087e2f11531ba649
     name: shop
     type: application
     urls:
@@ -36,10 +36,10 @@ entries:
     version: 1.0.10
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2369399+02:00"
+    created: "2026-10-20T11:09:07.6560222+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: c45401cfed86995fa20658377b7ca5284e8edd28628c597ac054f074f7e2209d
+    digest: 43b463fab00869ca5621756180f6f794ab44db83ba5516fd7df4e06e9d66d30b
     name: shop
     type: application
     urls:
@@ -47,10 +47,10 @@ entries:
     version: 1.0.9
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2369399+02:00"
+    created: "2026-10-20T11:09:07.6538825+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: 76228b481831c4bbb5ca1c72f5b16240870eca77567628d4368ede78c5d84102
+    digest: b0190f5dd5b3807653b4e44420cd331af5145682c0be99c3bde04f8129bc6ad7
     name: shop
     type: application
     urls:
@@ -58,10 +58,10 @@ entries:
     version: 1.0.8
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2359162+02:00"
+    created: "2026-10-20T11:09:07.6533548+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: 93d570c1410ba2eb0b95ca8f6a1756524c00ea6184556622504d4e6023f8a4b8
+    digest: 54de8c50bb8e07b7cc4a6c6411dc77e3bd6de1ba65e82fa80714e859904de3c6
     name: shop
     type: application
     urls:
@@ -69,10 +69,10 @@ entries:
     version: 1.0.7
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2349381+02:00"
+    created: "2026-10-20T11:09:07.652836+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: b2772bd986fab1c11f89444090ac508add47806a621e6623dd1e943289f2b157
+    digest: f0a97ae7ca24244ad5d046e5bcfcd192976bc6e7177fd23b63d9e5927cb7389f
     name: shop
     type: application
     urls:
@@ -80,10 +80,10 @@ entries:
     version: 1.0.6
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2343966+02:00"
+    created: "2026-10-20T11:09:07.6523096+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: d6df74e6562baee6343ea8ab43cb0952bd5c6a9312d2b9284bbfcaf42ef3b494
+    digest: 40f44cdf78c2d2ea178a1eeb093118675b95a710c6e0712c2f87512ba5c2dc83
     name: shop
     type: application
     urls:
@@ -91,10 +91,10 @@ entries:
     version: 1.0.5
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2338653+02:00"
+    created: "2026-10-20T11:09:07.6517806+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: dd67f08b89665e6a2ed132514c2aae96a55f98c8b25a76f85b5c968799bb7670
+    digest: a302b80156ee0fae92240b3d606238d03db8dce365b13007c796f1f7c5158b89
     name: shop
     type: application
     urls:
@@ -102,10 +102,10 @@ entries:
     version: 1.0.4
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2333303+02:00"
+    created: "2026-10-20T11:09:07.6512624+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: 80375052351c312d346621d9dbe796f5f27b8a0e769e46493cff0e61d6e2d9b4
+    digest: c91747b36a1eeed7a4559e52911520cb80d088a3b3efa48aa0681785dcb15bf9
     name: shop
     type: application
     urls:
@@ -113,10 +113,10 @@ entries:
     version: 1.0.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2322823+02:00"
+    created: "2026-10-20T11:09:07.6507461+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: bce68ac300849eba5dda8f5d542820f6c2700ebe96f2b28fb663c6b348e004c2
+    digest: a0feb4d85495c348481f5bf2b2383c0acd247934f65c56bdea7a5f294e137300
     name: shop
     type: application
     urls:
@@ -124,10 +124,10 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2301765+02:00"
+    created: "2026-10-20T11:09:07.6491995+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: ba00ad2de4136164c760566159b3d5d2b5c418af9e1c4cf0b31f9d8e53f6855f
+    digest: bd9d3ce2ebd22db4c6fdd6b33a5ee551f4321e7426c422e841ca973f97f4a6aa
     name: shop
     type: application
     urls:
@@ -135,13 +135,13 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-10-19T20:03:35.2290662+02:00"
+    created: "2026-10-20T11:09:07.6486784+02:00"
     description: Shop demo application (order API with log sidecar, web frontend)
       for Kubernetes and OpenShift exercises
-    digest: 8eeab5020d61d99105bbf31e0fbcc24382efcd6212f8a211c6e6916cec600a0c
+    digest: e08d1021e5299f1d157769f9d1c3fa6c95f6655cfa000b75a95ee6394b8bdcd5
     name: shop
     type: application
     urls:
     - https://cgamperl.github.io/k8s-lab/shop-1.0.0.tgz
     version: 1.0.0
-generated: "2026-10-19T20:03:35.2279847+02:00"
+generated: "2026-10-20T11:09:07.6439348+02:00"
