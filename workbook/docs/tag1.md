@@ -203,6 +203,8 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
 
 **Erwartetes Ergebnis:** Nach Schritt 4 startet der Pod und stürzt wiederholt ab: Der Status wechselt zwischen `Error` und `CrashLoopBackOff`, der Ring um den Kreis ist dunkel. Das Log zeigt `FATAL: required environment variable LEGACY_URL is not set`. Nach Schritt 7 entsteht ein neuer Pod mit dem Status `Running`, der Ring wird blau.
 
+**Hinweis:** Das Formular legt neben dem Deployment einen Service und einen **ImageStream** `api` an. Ein ImageStream ist ein OpenShift-eigener Verweis auf ein Image (kein Kubernetes-Standard). Ändert sich das Image hinter dem Verweis, kann OpenShift das Deployment automatisch neu ausrollen (Image-Trigger). Helm-Charts an Tag 2 verwenden keine ImageStreams; ihre Deployments nennen das Image direkt.
+
 ---
 
 ### Übung 1.7: Einen Pod untersuchen
