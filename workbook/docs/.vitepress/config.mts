@@ -24,7 +24,7 @@ function page(text: string, file: string, level: 2 | 3): DefaultTheme.SidebarIte
     if (line.trimStart().startsWith('```')) fence = !fence
     if (fence || !line.startsWith(prefix)) continue
     const heading = line.slice(prefix.length).replace(/[`*]/g, '').trim()
-    items.push({ text: heading.replace(/^Übung(en)? /, ''), link: `/${file}#${slugify(heading)}` })
+    items.push({ text: heading.replace(/^Übung(en)? ([^:]+):/, '$2'), link: `/${file}#${slugify(heading)}` })
   }
   return { text, link: `/${file}`, collapsed: true, items }
 }
