@@ -51,6 +51,7 @@ export default defineConfig({
       page('Tag 1: Vom Container zu Kubernetes', 'tag1', 3),
       page('Tag 2: Helm, Updates, Fehlersuche', 'tag2', 3),
       page('Tag 3: Netzwerk, Rancher, Challenge', 'tag3', 3),
+      page('Anhang: Docker-Befehle', 'anhang-docker', 2),
       page('Anhang: Symptome und Ursachen', 'anhang-symptome', 2),
     ],
     outline: { level: [2, 3], label: 'Auf dieser Seite' },

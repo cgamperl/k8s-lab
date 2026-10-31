@@ -6,6 +6,7 @@
 - Zugangsdaten werden zu Kursbeginn bekanntgegeben; das Passwort ist für alle Teilnehmer gleich. Benutzername und Passwort gelten für die OpenShift-Konsole und für Rancher.
 - OpenShift-Konsole: https://console.a.openshift.tectrain.at
 - Die Docker-Übungen laufen in Docker Desktop auf dem Schulungs-Laptop, die Befehle in PowerShell. Jede Befehlszeile wird als Ganzes eingegeben.
+- Die Docker-Befehle und ihre Optionen sind im Anhang „Docker-Befehle“ erklärt.
 - Images der Demo-Anwendung: `ghcr.io/cgamperl/k8s-lab/<name>:1.0.0` mit `<name>` = `api`, `frontend`, `legacy` (Bestellsystem), `log-sidecar`.
 
 Die Demo-Anwendung „Shop“ besteht aus einem Frontend (Webseite), einer API und einem externen Bestellsystem. Das Frontend ruft die API auf, die API holt die Bestellungen aus dem Bestellsystem.
@@ -49,7 +50,7 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
 2. Die Ausgabe lesen. Mit `docker ps -a` den Status des Containers prüfen, danach `docker rm api-test`.
 3. Das Bestellsystem als eigenen Container starten. Port 8081 des Laptops wird auf Port 8081 des Containers weitergeleitet:
    ```powershell
-   docker run -d --name bestellsystem -p 8081:8081 ghcr.io/cgamperl/k8s-lab/legacy:1.0.0
+   docker run -d --name legacy -p 8081:8081 ghcr.io/cgamperl/k8s-lab/legacy:1.0.0
    ```
 4. Im Browser http://localhost:8081/orders öffnen.
 5. API mit der Adresse des Bestellsystems starten. `host.docker.internal` ist in Docker Desktop der Name des Laptops aus Sicht eines Containers:
@@ -61,7 +62,7 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
 
 **Erwartetes Ergebnis:** Schritt 1 endet sofort mit `FATAL: required environment variable LEGACY_URL is not set`, der Container hat den Status `Exited`. Nach Schritt 6 zeigt der Browser drei Bestellungen als JSON. Das Log enthält eine Zeile pro Aufruf (`GET /orders … 200 OK`).
 
-**Zusatz:** Das Bestellsystem mit `docker stop bestellsystem` anhalten und http://localhost:8090/orders erneut aufrufen. Welche Meldung liefert die API, und was steht im Log? Danach `docker start bestellsystem`.
+**Zusatz:** Das Bestellsystem mit `docker stop legacy` anhalten und http://localhost:8090/orders erneut aufrufen. Welche Meldung liefert die API, und was steht im Log? Danach `docker start legacy`.
 
 ---
 
@@ -85,9 +86,9 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
    ```
 3. Im Container Dateien anlegen und lesen:
    ```sh
-   echo Notiz > /tmp/notiz.txt
-   cat /tmp/notiz.txt
-   echo Notiz > /app/notiz.txt
+   echo note > /tmp/note.txt
+   cat /tmp/note.txt
+   echo note > /app/note.txt
    ls -ld /app /var/log/app
    ls /var/log/app
    ```
@@ -97,7 +98,7 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
    ```powershell
    docker rm -f api
    docker run -d --name api -p 8090:8080 -e LEGACY_URL=http://host.docker.internal:8081 ghcr.io/cgamperl/k8s-lab/api:1.0.0
-   docker exec api cat /tmp/notiz.txt
+   docker exec api cat /tmp/note.txt
    ```
 7. Die Schichten des Images anzeigen: `docker history ghcr.io/cgamperl/k8s-lab/api:1.0.0`.
 8. Die Metadaten des Images anzeigen:
@@ -105,7 +106,7 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
    docker image inspect ghcr.io/cgamperl/k8s-lab/api:1.0.0 --format "User={{.Config.User}} Ports={{.Config.ExposedPorts}} Cmd={{.Config.Cmd}}"
    ```
 
-**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`, das Arbeitsverzeichnis ist `/app` mit `app.py`. Der Rechnername ist der Anfang der Container-ID. `/tmp/notiz.txt` lässt sich anlegen, `/app/notiz.txt` nicht (`Permission denied`): Der Prozess läuft nicht als root und darf nur in freigegebene Verzeichnisse schreiben: `/app` ist nur für den Besitzer root beschreibbar (`drwxr-xr-x`), `/var/log/app` auch für die Gruppe root (`drwxrwxr-x`), der der Benutzer 1001 angehört. In `/var/log/app` liegt die Logdatei `api.log` der API. `docker diff` listet `/tmp/notiz.txt` und `/var/log/app/api.log` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
+**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`, das Arbeitsverzeichnis ist `/app` mit `app.py`. Der Rechnername ist der Anfang der Container-ID. `/tmp/note.txt` lässt sich anlegen, `/app/note.txt` nicht (`Permission denied`): Der Prozess läuft nicht als root und darf nur in freigegebene Verzeichnisse schreiben: `/app` ist nur für den Besitzer root beschreibbar (`drwxr-xr-x`), `/var/log/app` auch für die Gruppe root (`drwxrwxr-x`), der der Benutzer 1001 angehört. In `/var/log/app` liegt die Logdatei `api.log` der API. `docker diff` listet `/tmp/note.txt` und `/var/log/app/api.log` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
 
 ---
 
@@ -119,19 +120,24 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
 1. Den Container `api` entfernen: `docker rm -f api`.
 2. API mit einem benannten Volume für ihr Log-Verzeichnis starten:
    ```powershell
-   docker run -d --name api -p 8090:8080 -e LEGACY_URL=http://host.docker.internal:8081 -v kurslogs:/var/log/app ghcr.io/cgamperl/k8s-lab/api:1.0.0
+   docker run -d --name api -p 8090:8080 -e LEGACY_URL=http://host.docker.internal:8081 -v api-logs:/var/log/app ghcr.io/cgamperl/k8s-lab/api:1.0.0
    ```
 3. Einen zweiten Container starten, der dasselbe Volume einbindet und die Logdatei ausgibt:
    ```powershell
-   docker run -d --name log-sidecar -v kurslogs:/var/log/app ghcr.io/cgamperl/k8s-lab/log-sidecar:1.0.0
+   docker run -d --name log-sidecar -v api-logs:/var/log/app ghcr.io/cgamperl/k8s-lab/log-sidecar:1.0.0
    ```
 4. http://localhost:8090/orders einige Male aufrufen.
 5. `docker logs api` und `docker logs log-sidecar` vergleichen.
-6. Aufräumen: `docker rm -f api log-sidecar bestellsystem` und `docker volume rm kurslogs`.
+6. Aufräumen: `docker rm -f api log-sidecar legacy` und `docker volume rm api-logs`.
 
 **Erwartetes Ergebnis:** `docker logs api` zeigt nur Zugriffe (`GET /orders`). `docker logs log-sidecar` zeigt die Anwendungsmeldungen aus der Datei `api.log`, z. B. `starting on …` und `served 3 orders`.
 
-**Zusatz:** Statt eines benannten Volumes ein Verzeichnis des Laptops einbinden (Bind Mount): `-v ${PWD}\logs:/var/log/app`. Danach liegt die Datei `api.log` im Ordner `logs` des aktuellen Verzeichnisses.
+**Zusatz:** Vor dem Aufräumen in Schritt 6 die API mit einem Verzeichnis des Laptops statt eines benannten Volumes starten (Bind Mount):
+```powershell
+docker rm -f api
+docker run -d --name api -p 8090:8080 -e LEGACY_URL=http://host.docker.internal:8081 -v ${PWD}\logs:/var/log/app ghcr.io/cgamperl/k8s-lab/api:1.0.0
+```
+Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach die Datei `api.log`, die sich mit einem Editor öffnen lässt.
 
 ---
 
@@ -145,12 +151,12 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
 1. Einen Ordner `shop` anlegen und darin die Datei `compose.yaml` mit diesem Inhalt speichern:
    ```yaml
    services:
-     bestellsystem:
+     legacy:
        image: ghcr.io/cgamperl/k8s-lab/legacy:1.0.0
      api:
        image: ghcr.io/cgamperl/k8s-lab/api:1.0.0
        environment:
-         LEGACY_URL: http://bestellsystem:8081
+         LEGACY_URL: http://legacy:8081
        volumes:
          - logs:/var/log/app
      log-sidecar:
