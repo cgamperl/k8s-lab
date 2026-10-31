@@ -88,6 +88,7 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
    echo Notiz > /tmp/notiz.txt
    cat /tmp/notiz.txt
    echo Notiz > /app/notiz.txt
+   ls -ld /app /var/log/app
    ls /var/log/app
    ```
 4. Die Shell mit `exit` verlassen. Auf dem Laptop mit `docker ps` den Rechnernamen aus Schritt 2 mit der Container-ID vergleichen.
@@ -104,7 +105,7 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
    docker image inspect ghcr.io/cgamperl/k8s-lab/api:1.0.0 --format "User={{.Config.User}} Ports={{.Config.ExposedPorts}} Cmd={{.Config.Cmd}}"
    ```
 
-**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`, das Arbeitsverzeichnis ist `/app` mit `app.py`. Der Rechnername ist der Anfang der Container-ID. `/tmp/notiz.txt` lässt sich anlegen, `/app/notiz.txt` nicht (`Permission denied`): Der Prozess läuft nicht als root und darf nur in freigegebene Verzeichnisse schreiben. In `/var/log/app` liegt die Logdatei `api.log` der API. `docker diff` listet `/tmp/notiz.txt` und `/var/log/app/api.log` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
+**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`, das Arbeitsverzeichnis ist `/app` mit `app.py`. Der Rechnername ist der Anfang der Container-ID. `/tmp/notiz.txt` lässt sich anlegen, `/app/notiz.txt` nicht (`Permission denied`): Der Prozess läuft nicht als root und darf nur in freigegebene Verzeichnisse schreiben: `/app` ist nur für den Besitzer root beschreibbar (`drwxr-xr-x`), `/var/log/app` auch für die Gruppe root (`drwxrwxr-x`), der der Benutzer 1001 angehört. In `/var/log/app` liegt die Logdatei `api.log` der API. `docker diff` listet `/tmp/notiz.txt` und `/var/log/app/api.log` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
 
 ---
 
