@@ -12,6 +12,11 @@ an order API with a log sidecar, and a stand-in for an external order system.
 
 All images run as an arbitrary non-root UID (OpenShift `restricted-v2`).
 
+## Workbook
+
+Exercise texts (German): https://cgamperl.github.io/k8s-lab/workbook/, source in
+`workbook/docs/`. A push to `main` publishes changes; see `workbook/README.md`.
+
 ## Helm chart
 
 ```bash

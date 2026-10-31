@@ -1,0 +1,39 @@
+name: workbook
+
+on:
+  push:
+    branches: [main]
+    paths: ["workbook/**", ".github/workflows/workbook.yaml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r workbook/requirements.txt
+      - run: mkdocs build --strict -f workbook/mkdocs.yml -d "$RUNNER_TEMP/site"
+      # gh-pages also holds the Helm repository (index.yaml, *.tgz); only the
+      # workbook/ folder is replaced.
+      - name: Publish to gh-pages/workbook
+        run: |
+          git fetch -q origin gh-pages
+          git worktree add -q --detach "$RUNNER_TEMP/pages" origin/gh-pages
+          cd "$RUNNER_TEMP/pages"
+          rm -rf workbook
+          cp -r "$RUNNER_TEMP/site" workbook
+          git add -A workbook
+          if git diff --cached --quiet; then echo "workbook unchanged"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "docs(workbook): publish ${GITHUB_SHA::7}"
+          git push -q origin HEAD:gh-pages

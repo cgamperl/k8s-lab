@@ -1,2 +1,4 @@
 *.tgz
 .cr-release-packages/
+workbook/site/
+__pycache__/
