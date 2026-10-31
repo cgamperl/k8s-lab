@@ -72,19 +72,39 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
 **Dauer:** ca. 15 min
 
 **Schritte:**
-1. Im laufenden Container `api` eine Datei anlegen und den Benutzer anzeigen:
+1. Eine Shell im laufenden Container `api` öffnen. Die Eingabeaufforderung wechselt zu `$`; alle folgenden Befehle bis `exit` laufen im Container:
    ```powershell
-   docker exec api sh -c "echo Notiz > /tmp/notiz.txt; id"
+   docker exec -it api sh
    ```
-2. Änderungen gegenüber dem Image anzeigen: `docker diff api`.
-3. Container entfernen und neu starten (Befehl aus Übung 1.2, Schritt 5), dann `docker exec api cat /tmp/notiz.txt`.
-4. Die Schichten des Images anzeigen: `docker history ghcr.io/cgamperl/k8s-lab/api:1.0.0`.
-5. Die Metadaten des Images anzeigen:
+2. Im Container den Benutzer, das Arbeitsverzeichnis und den Rechnernamen anzeigen:
+   ```sh
+   id
+   pwd
+   ls
+   hostname
+   ```
+3. Im Container Dateien anlegen und lesen:
+   ```sh
+   echo Notiz > /tmp/notiz.txt
+   cat /tmp/notiz.txt
+   echo Notiz > /app/notiz.txt
+   ls /var/log/app
+   ```
+4. Die Shell mit `exit` verlassen. Auf dem Laptop mit `docker ps` den Rechnernamen aus Schritt 2 mit der Container-ID vergleichen.
+5. Änderungen gegenüber dem Image anzeigen: `docker diff api`.
+6. Container entfernen, neu starten und die Datei erneut lesen:
+   ```powershell
+   docker rm -f api
+   docker run -d --name api -p 8090:8080 -e LEGACY_URL=http://host.docker.internal:8081 ghcr.io/cgamperl/k8s-lab/api:1.0.0
+   docker exec api cat /tmp/notiz.txt
+   ```
+7. Die Schichten des Images anzeigen: `docker history ghcr.io/cgamperl/k8s-lab/api:1.0.0`.
+8. Die Metadaten des Images anzeigen:
    ```powershell
    docker image inspect ghcr.io/cgamperl/k8s-lab/api:1.0.0 --format "User={{.Config.User}} Ports={{.Config.ExposedPorts}} Cmd={{.Config.Cmd}}"
    ```
 
-**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`. `docker diff` listet `/tmp/notiz.txt` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
+**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`, das Arbeitsverzeichnis ist `/app` mit `app.py`. Der Rechnername ist der Anfang der Container-ID. `/tmp/notiz.txt` lässt sich anlegen, `/app/notiz.txt` nicht (`Permission denied`): Der Prozess läuft nicht als root und darf nur in freigegebene Verzeichnisse schreiben. In `/var/log/app` liegt die Logdatei `api.log` der API. `docker diff` listet `/tmp/notiz.txt` und `/var/log/app/api.log` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
 
 ---
 
