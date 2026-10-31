@@ -11,7 +11,7 @@ holds the sidebar and the German UI labels (VitePress, default theme).
 - The site is live about one to two minutes after the push (Actions run, then
   the Pages build). GitHub Pages lets browsers cache pages for up to
   10 minutes; a page that is already open may need a reload with Ctrl+F5.
-- A new page needs an entry in the sidebar in `config.mts`.
+- The sidebar lists every `### Übung …` heading of a day (appendix: `## …`); it is generated from the files at build time. A new page needs one `page(...)` line in `config.mts`.
 - `http://localhost:…` links are not checked (Docker Desktop on the training
   laptop); any other dead link fails the build.
 
