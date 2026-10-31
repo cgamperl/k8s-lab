@@ -1,4 +1,6 @@
 *.tgz
 .cr-release-packages/
-workbook/site/
+workbook/node_modules/
+workbook/docs/.vitepress/dist/
+workbook/docs/.vitepress/cache/
 __pycache__/

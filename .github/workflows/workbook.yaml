@@ -18,11 +18,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-node@v4
         with:
-          python-version: "3.12"
-      - run: pip install -r workbook/requirements.txt
-      - run: mkdocs build --strict -f workbook/mkdocs.yml -d "$RUNNER_TEMP/site"
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: workbook/package-lock.json
+      - run: npm ci
+        working-directory: workbook
+      - run: npm run build
+        working-directory: workbook
       # gh-pages also holds the Helm repository (index.yaml, *.tgz); only the
       # workbook/ folder is replaced.
       - name: Publish to gh-pages/workbook
@@ -31,7 +35,7 @@ jobs:
           git worktree add -q --detach "$RUNNER_TEMP/pages" origin/gh-pages
           cd "$RUNNER_TEMP/pages"
           rm -rf workbook
-          cp -r "$RUNNER_TEMP/site" workbook
+          cp -r "$GITHUB_WORKSPACE/workbook/docs/.vitepress/dist" workbook
           git add -A workbook
           if git diff --cached --quiet; then echo "workbook unchanged"; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
