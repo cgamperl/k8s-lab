@@ -1,0 +1,1 @@
+import{_ as a,o as n,c as t,a2 as r}from"./chunks/framework.D-e0yUf_.js";const m=JSON.parse('{"title":"Übungen","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),i={name:"index.md"};function l(o,e,s,u,d,c){return n(),t("div",null,[...e[0]||(e[0]=[r("",4)])])}const _=a(i,[["render",l]]);export{m as __pageData,_ as default};
