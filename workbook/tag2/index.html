@@ -1,0 +1,1001 @@
+
+<!doctype html>
+<html lang="de" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://cgamperl.github.io/k8s-lab/workbook/tag2/">
+      
+      
+        <link rel="prev" href="../tag1/">
+      
+      
+        <link rel="next" href="../tag3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Tag 2 - Übungen</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tag-2-helm-updates-fehlersuche" class="md-skip">
+          Zum Inhalt
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
+    <a href=".." title="Übungen" class="md-header__button md-logo" aria-label="Übungen" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Übungen
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tag 2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dunkles Design"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dunkles Design" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Helles Design"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Helles Design" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Suche" placeholder="Suche" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Suche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Zurücksetzen" aria-label="Zurücksetzen" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Suche wird initialisiert
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Übungen" class="md-nav__button md-logo" aria-label="Übungen" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Übungen
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tag1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 2
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-21-ein-helm-repository-hinzufugen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.1: Ein Helm-Repository hinzufügen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-22-das-chart-ansehen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.2: Das Chart ansehen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-23-die-anwendung-mit-helm-installieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.3: Die Anwendung mit Helm installieren
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-24-ein-release-untersuchen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.4: Ein Release untersuchen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-25-helm-im-web-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.5: Helm im Web Terminal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-26-upgrade-mit-rolling-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.6: Upgrade mit Rolling Update
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-27-upgrade-in-der-konsole" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.7: Upgrade in der Konsole
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-28-upgrade-mit-einer-values-datei" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.8: Upgrade mit einer Values-Datei
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-29-probes-ressourcen-und-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.9: Probes, Ressourcen und Quota
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubungen-210217-gefuhrte-fehlerszenarien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übungen 2.10–2.17: Geführte Fehlerszenarien
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tag3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anhang-symptome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anhang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-21-ein-helm-repository-hinzufugen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.1: Ein Helm-Repository hinzufügen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-22-das-chart-ansehen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.2: Das Chart ansehen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-23-die-anwendung-mit-helm-installieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.3: Die Anwendung mit Helm installieren
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-24-ein-release-untersuchen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.4: Ein Release untersuchen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-25-helm-im-web-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.5: Helm im Web Terminal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-26-upgrade-mit-rolling-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.6: Upgrade mit Rolling Update
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-27-upgrade-in-der-konsole" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.7: Upgrade in der Konsole
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-28-upgrade-mit-einer-values-datei" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.8: Upgrade mit einer Values-Datei
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-29-probes-ressourcen-und-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 2.9: Probes, Ressourcen und Quota
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubungen-210217-gefuhrte-fehlerszenarien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übungen 2.10–2.17: Geführte Fehlerszenarien
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tag-2-helm-updates-fehlersuche">Tag 2: Helm, Updates, Fehlersuche<a class="headerlink" href="#tag-2-helm-updates-fehlersuche" title="Permanent link">&para;</a></h1>
+<p><code>XX</code> steht wie an Tag 1 für die eigene Teilnehmernummer. Die Projects <code>pXX-frontend</code> und <code>pXX-backend</code> sind zu Beginn leer.</p>
+<p><strong>Fallbeispiel:</strong> Die Entwicklung liefert den Shop für die Super Shop GmbH ab heute als Helm Chart. Der Tag folgt der Installation, dem Update auf eine neue Version und den ersten Störungsmeldungen des Vertriebs.</p>
+<p>Helm-Repository der Schulung: <code>https://cgamperl.github.io/k8s-lab/</code>, Chart <code>shop</code>. Die Anwendung wird zweimal aus demselben Chart installiert:</p>
+<table>
+<thead>
+<tr>
+<th>Release</th>
+<th>Project</th>
+<th>Rolle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>api</code></td>
+<td><code>pXX-backend</code></td>
+<td>API mit Log-Sidecar (Standardwerte)</td>
+</tr>
+<tr>
+<td><code>web</code></td>
+<td><code>pXX-frontend</code></td>
+<td>Frontend mit Route (Value <code>role: frontend</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="ubung-21-ein-helm-repository-hinzufugen">Übung 2.1: Ein Helm-Repository hinzufügen<a class="headerlink" href="#ubung-21-ein-helm-repository-hinzufugen" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Das Repository der Entwicklungsabteilung in der Konsole bekannt machen.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole<br />
+<strong>Dauer:</strong> ca. 10 min<br />
+<strong>Ticket:</strong> SHOP-1010 · Die Installation bei Super Shop durch das Helm Chart ersetzen.</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>Links <strong>Ecosystem → Helm</strong> öffnen, Project <code>pXX-backend</code>.</li>
+<li><strong>Create → Repository</strong>. <strong>Name:</strong> <code>k8s-lab</code>, <strong>URL:</strong> <code>https://cgamperl.github.io/k8s-lab/</code>. <strong>Create</strong>.</li>
+<li>Dasselbe im Project <code>pXX-frontend</code>.</li>
+<li>Reiter <strong>Repositories</strong> auf der Helm-Seite ansehen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> In beiden Projects ist das Repository <code>k8s-lab</code> eingetragen. Es gilt nur für das jeweilige Project.</p>
+<hr />
+<h3 id="ubung-22-das-chart-ansehen">Übung 2.2: Das Chart ansehen<a class="headerlink" href="#ubung-22-das-chart-ansehen" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Versionen und Standardwerte eines Charts vor der Installation prüfen.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole<br />
+<strong>Dauer:</strong> ca. 10 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li><strong>Ecosystem → Software Catalog</strong>, Project <code>pXX-backend</code>, Typ <strong>Helm Charts</strong>, Suchbegriff <code>shop</code>.</li>
+<li>Die Kachel <strong>Shop</strong> öffnen und die Beschreibung lesen. <strong>Create</strong> wählen.</li>
+<li>Im Formular die Liste <strong>Chart version</strong> öffnen und ansehen, dann wieder schließen.</li>
+<li>Im YAML-Editor die Standardwerte lesen: <code>role</code>, <code>api.replicas</code>, <code>api.config</code>, <code>api.probes</code>, <code>api.resources</code>, <code>sidecar</code>, <code>exposure</code>.</li>
+<li><strong>Cancel</strong>.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Die Liste zeigt mehrere Chart-Versionen. <code>role</code> hat den Standardwert <code>api</code>. Die Formularansicht ist deaktiviert, Werte werden im YAML-Editor bearbeitet.</p>
+<hr />
+<h3 id="ubung-23-die-anwendung-mit-helm-installieren">Übung 2.3: Die Anwendung mit Helm installieren<a class="headerlink" href="#ubung-23-die-anwendung-mit-helm-installieren" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Beide Releases in der Konsole installieren.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole<br />
+<strong>Dauer:</strong> ca. 15 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>Wie in 2.2 im Project <code>pXX-backend</code> das Chart <strong>Shop</strong> öffnen und <strong>Create</strong> wählen.</li>
+<li><strong>Release name:</strong> <code>api</code>, <strong>Chart version:</strong> <code>1.0.0</code>. Die Werte unverändert lassen. <strong>Create</strong>.</li>
+<li>Im Project <code>pXX-frontend</code> das Chart erneut öffnen. <strong>Release name:</strong> <code>web</code>, <strong>Chart version:</strong> <code>1.0.0</code>.</li>
+<li>Im YAML-Editor die Zeile <code>role: api</code> in <code>role: frontend</code> ändern. <strong>Create</strong>.</li>
+<li>In der Topology von <code>pXX-frontend</code> die Route des Frontends öffnen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Die Topology zeigt je einen gestrichelten Helm-Rahmen. Die Seite zeigt drei Bestellungen, die Frontend- und API-Version 1.0.0 und die antwortende API-Instanz.</p>
+<hr />
+<h3 id="ubung-24-ein-release-untersuchen">Übung 2.4: Ein Release untersuchen<a class="headerlink" href="#ubung-24-ein-release-untersuchen" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Die Ansichten eines Helm-Releases kennenlernen.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole<br />
+<strong>Dauer:</strong> ca. 10 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li><strong>Ecosystem → Helm</strong>, Project <code>pXX-backend</code>, Release <code>api</code> öffnen.</li>
+<li>Reiter <strong>Details</strong>, <strong>Resources</strong>, <strong>Revision history</strong>, <strong>Release notes</strong> ansehen.</li>
+<li>Unter <strong>Resources</strong> die Objekte notieren, die das Release angelegt hat.</li>
+<li>Unter <strong>Workloads → Pods</strong> einen API-Pod öffnen, Reiter <strong>Logs</strong>, und mit der Container-Auswahl zwischen <code>api</code> und <code>log-sidecar</code> wechseln.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Das Release besteht aus Deployment, Service und ConfigMap; das Release <code>web</code> aus Deployment, Service und Route. Der Container <code>api</code> schreibt nur Zugriffe, <code>log-sidecar</code> zeigt die Anwendungsmeldungen.</p>
+<hr />
+<h3 id="ubung-25-helm-im-web-terminal">Übung 2.5: Helm im Web Terminal<a class="headerlink" href="#ubung-25-helm-im-web-terminal" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Dieselben Releases mit der Kommandozeile betrachten.<br />
+<strong>Umgebung:</strong> Web Terminal<br />
+<strong>Dauer:</strong> ca. 15 min<br />
+<strong>Ticket:</strong> SHOP-1011 · Version 1.1.0 ohne Ausfall einspielen, mit Möglichkeit zur Rücknahme.</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>Oben rechts auf <strong>&gt;_</strong> klicken, Project <code>pXX-backend</code>, <strong>Start</strong>. Etwa eine Minute warten.</li>
+<li>Eingeben:
+    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>lab<span class="w"> </span>https://cgamperl.github.io/k8s-lab/
+helm<span class="w"> </span>search<span class="w"> </span>repo<span class="w"> </span>lab/shop<span class="w"> </span>--versions
+helm<span class="w"> </span>list<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+helm<span class="w"> </span>list<span class="w"> </span>-n<span class="w"> </span>pXX-frontend
+helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>web<span class="w"> </span>-n<span class="w"> </span>pXX-frontend
+helm<span class="w"> </span><span class="nb">history</span><span class="w"> </span>api<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+</code></pre></div></li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> <code>helm list</code> zeigt <code>api</code> bzw. <code>web</code> mit Chart <code>shop-1.0.0</code>, Status <code>deployed</code>, Revision 1. <code>helm get values web</code> enthält <code>role: frontend</code>.</p>
+<hr />
+<h3 id="ubung-26-upgrade-mit-rolling-update">Übung 2.6: Upgrade mit Rolling Update<a class="headerlink" href="#ubung-26-upgrade-mit-rolling-update" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Die API auf eine neue Version aktualisieren und den Austausch der Pods beobachten.<br />
+<strong>Umgebung:</strong> Web Terminal, OpenShift-Konsole<br />
+<strong>Dauer:</strong> ca. 15 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>In der Konsole die Topology von <code>pXX-backend</code> öffnen und daneben das Web Terminal.</li>
+<li>Im Web Terminal:
+    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>api<span class="w"> </span>lab/shop<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+oc<span class="w"> </span>rollout<span class="w"> </span>status<span class="w"> </span>deployment/api<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+oc<span class="w"> </span>get<span class="w"> </span>replicasets<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+</code></pre></div></li>
+<li>Die Seite der Anwendung neu laden.</li>
+<li><code>helm history api -n pXX-backend</code>.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Die Pods werden einzeln ersetzt („1 out of 2 new replicas have been updated“). Danach gibt es zwei ReplicaSets, das alte mit 0 Pods. Die Seite zeigt die API-Version 1.1.0. Der Verlauf enthält zwei Revisionen.</p>
+<hr />
+<h3 id="ubung-27-upgrade-in-der-konsole">Übung 2.7: Upgrade in der Konsole<a class="headerlink" href="#ubung-27-upgrade-in-der-konsole" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Das Frontend in der Konsole aktualisieren und dabei die Werte im Blick behalten.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole<br />
+<strong>Dauer:</strong> ca. 15 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li><strong>Ecosystem → Helm</strong>, Project <code>pXX-frontend</code>, Release <code>web</code>, <strong>Actions → Upgrade</strong>.</li>
+<li>Im YAML-Editor die Zeile mit <code>role</code> suchen und den Wert notieren.</li>
+<li><strong>Chart version</strong> auf <code>1.1.0</code> stellen. Die Zeile mit <code>role</code> erneut ansehen.</li>
+<li>Ohne weitere Änderung <strong>Upgrade</strong> wählen.</li>
+<li>Die Topology von <code>pXX-frontend</code> und die Seite der Anwendung ansehen.</li>
+<li>Beschreiben, was passiert ist, und im Release unter <strong>Revision history</strong> über das Menü der Zeile von Revision 1 <strong>Rollback to Revision 1</strong> ausführen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Vor dem Versionswechsel steht <code>role: frontend</code>, danach <code>role: api</code>. Nach dem Upgrade läuft in <code>pXX-frontend</code> eine zweite API, die Route fehlt, die Seite ist nicht erreichbar. Nach dem Rollback läuft das Frontend wieder; der Verlauf zeigt drei Revisionen, die letzte mit „Rollback to 1“.</p>
+<hr />
+<h3 id="ubung-28-upgrade-mit-einer-values-datei">Übung 2.8: Upgrade mit einer Values-Datei<a class="headerlink" href="#ubung-28-upgrade-mit-einer-values-datei" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Eigene Werte bei Upgrades zuverlässig mitgeben.<br />
+<strong>Umgebung:</strong> Web Terminal<br />
+<strong>Dauer:</strong> ca. 15 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>Eine Values-Datei anlegen und prüfen:
+    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"role: frontend"</span><span class="w"> </span>&gt;<span class="w"> </span>web-values.yaml
+cat<span class="w"> </span>web-values.yaml
+</code></pre></div></li>
+<li>Vorschau ohne Änderung:
+    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>web<span class="w"> </span>lab/shop<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0<span class="w"> </span>-n<span class="w"> </span>pXX-frontend<span class="w"> </span>-f<span class="w"> </span>web-values.yaml<span class="w"> </span>--dry-run<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A3<span class="w"> </span><span class="s2">"kind: Route"</span>
+</code></pre></div></li>
+<li>Upgrade ausführen: denselben Befehl ohne <code>--dry-run</code> und ohne <code>| grep …</code>.</li>
+<li>Seite neu laden, <code>helm history web -n pXX-frontend</code>.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Die Vorschau enthält eine Route. Nach dem Upgrade zeigt die Seite Frontend-Version 1.1.0; der Verlauf hat vier Revisionen.</p>
+<p><strong>Zusatz:</strong> Mit <code>helm rollback api -n pXX-backend</code> die API auf die vorige Revision zurücksetzen und mit <code>helm history</code> prüfen, welche Chart-Version jetzt läuft.</p>
+<hr />
+<h3 id="ubung-29-probes-ressourcen-und-quota">Übung 2.9: Probes, Ressourcen und Quota<a class="headerlink" href="#ubung-29-probes-ressourcen-und-quota" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Die Einstellungen finden, die über Neustarts, Bereitschaft und Speicherlimits entscheiden.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole, Web Terminal<br />
+<strong>Dauer:</strong> ca. 20 min<br />
+<strong>Ticket:</strong> SHOP-1012 · Die Ressourcenangaben des Shops gegen die neue Quota prüfen.</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li><strong>Workloads → Deployments → api</strong>, Reiter <strong>YAML</strong>. Die Abschnitte <code>readinessProbe</code>, <code>livenessProbe</code> und <code>resources</code> beider Container suchen.</li>
+<li>Im Web Terminal:
+    <div class="highlight"><pre><span></span><code>oc<span class="w"> </span>describe<span class="w"> </span>quota<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+oc<span class="w"> </span>describe<span class="w"> </span>limitrange<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+</code></pre></div></li>
+<li>Im Web Terminal die Health-Endpunkte der API aufrufen:
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://api.pXX-backend:8080/ready
+curl<span class="w"> </span>-s<span class="w"> </span>http://api.pXX-backend:8080/health
+</code></pre></div></li>
+<li>Werte notieren: Welche Pfade prüfen die Probes? Wie viel Speicher darf der Container <code>api</code> höchstens verwenden? Wie viel der Quota ist belegt?</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Readiness prüft <code>/ready</code>, Liveness <code>/health</code>; das Speicherlimit von <code>api</code> beträgt 256 Mi. Die Quota zeigt für <code>pods</code>, <code>limits.memory</code> und weitere Werte Belegung und Grenze; das Web Terminal zählt mit.</p>
+<hr />
+<h3 id="ubungen-210217-gefuhrte-fehlerszenarien">Übungen 2.10–2.17: Geführte Fehlerszenarien<a class="headerlink" href="#ubungen-210217-gefuhrte-fehlerszenarien" title="Permanent link">&para;</a></h3>
+<p><strong>Vorbereitung im Web Terminal</strong> (das Terminal verliert nach längerer Inaktivität seine Dateien und Repositories):
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>lab<span class="w"> </span>https://cgamperl.github.io/k8s-lab/
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"role: frontend"</span><span class="w"> </span>&gt;<span class="w"> </span>web-values.yaml
+</code></pre></div></p>
+<p>Der Trainer bringt die Anwendung aller Teilnehmer gleichzeitig in einen fehlerhaften Zustand. Für jedes Szenario:</p>
+<ol>
+<li><strong>Symptom feststellen:</strong> Was zeigt die Seite der Anwendung? Was zeigt die Topology?</li>
+<li><strong>Methode anwenden:</strong><ul>
+<li>Läuft die Anwendung? Pod-Status und READY → Events → Logs (bei Neustarts der vorige Lauf, bei zwei Containern beide) → YAML/Details.</li>
+<li>Kommt die Anfrage an? Route → Service → Endpoints → Pod.</li>
+<li>Was hat sich geändert? <code>helm history</code>, Revision history.</li>
+</ul>
+</li>
+<li><strong>Ursache benennen</strong> und im Protokoll festhalten.</li>
+<li><strong>Beheben</strong>, möglichst mit Helm: Rollback, oder Upgrade auf eine funktionierende Version (beim Release <code>web</code> mit der Values-Datei aus 2.8).</li>
+<li><strong>Prüfen:</strong> Die Seite zeigt wieder drei Bestellungen.</li>
+</ol>
+<p>Protokoll pro Szenario:</p>
+<table>
+<thead>
+<tr>
+<th>Szenario</th>
+<th>Symptom</th>
+<th>Wo gefunden (Ansicht, Befehl)</th>
+<th>Ursache</th>
+<th>Behebung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.10 (SHOP-1021)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2.11 (SHOP-1022)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2.12 (SHOP-1023)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2.13 (SHOP-1024)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2.14 (SHOP-1025)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2.15 (SHOP-1026)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2.16 (SHOP-1027)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2.17 (SHOP-1028)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Hinweise:</p>
+<ul>
+<li>Ein Rollback ist nur möglich, wenn das Release eine vorige, funktionierende Revision hat. <code>helm history</code> zeigt das.</li>
+<li>Die Tabelle im Anhang „Symptome und typische Ursachen“ hilft bei der Einordnung.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Zurück zum Seitenanfang
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.top", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

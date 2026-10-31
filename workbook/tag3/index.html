@@ -1,0 +1,1065 @@
+
+<!doctype html>
+<html lang="de" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://cgamperl.github.io/k8s-lab/workbook/tag3/">
+      
+      
+        <link rel="prev" href="../tag2/">
+      
+      
+        <link rel="next" href="../anhang-symptome/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Tag 3 - Übungen</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tag-3-netzwerk-externe-systeme-rancher-challenge" class="md-skip">
+          Zum Inhalt
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
+    <a href=".." title="Übungen" class="md-header__button md-logo" aria-label="Übungen" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Übungen
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tag 3
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dunkles Design"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dunkles Design" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Helles Design"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Helles Design" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Suche" placeholder="Suche" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Suche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Zurücksetzen" aria-label="Zurücksetzen" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Suche wird initialisiert
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Übungen" class="md-nav__button md-logo" aria-label="Übungen" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Übungen
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tag1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tag2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 3
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ubungen-3133-netzwerk-szenarien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übungen 3.1–3.3: Netzwerk-Szenarien
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-34-ein-externes-system-ist-nicht-erreichbar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.4: Ein externes System ist nicht erreichbar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-35-eine-anfrage-an-die-it-formulieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.5: Eine Anfrage an die IT formulieren
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-36-welcher-pod-antwortet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.6: Welcher Pod antwortet?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-37-anmeldung-an-rancher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.7: Anmeldung an Rancher
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-38-die-anwendung-uber-apps-installieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.8: Die Anwendung über Apps installieren
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-39-die-kubectl-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.9: Die kubectl-Shell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-310-upgrade-und-rollback-in-rancher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.10: Upgrade und Rollback in Rancher
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-311-zusatz-pod-security-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.11 (Zusatz): Pod Security in Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubungen-312313-szenarien-in-rancher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übungen 3.12–3.13: Szenarien in Rancher
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-314-break-fix-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.14: Break &amp; Fix Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anhang-symptome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anhang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ubungen-3133-netzwerk-szenarien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übungen 3.1–3.3: Netzwerk-Szenarien
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-34-ein-externes-system-ist-nicht-erreichbar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.4: Ein externes System ist nicht erreichbar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-35-eine-anfrage-an-die-it-formulieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.5: Eine Anfrage an die IT formulieren
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-36-welcher-pod-antwortet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.6: Welcher Pod antwortet?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-37-anmeldung-an-rancher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.7: Anmeldung an Rancher
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-38-die-anwendung-uber-apps-installieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.8: Die Anwendung über Apps installieren
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-39-die-kubectl-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.9: Die kubectl-Shell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-310-upgrade-und-rollback-in-rancher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.10: Upgrade und Rollback in Rancher
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-311-zusatz-pod-security-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.11 (Zusatz): Pod Security in Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubungen-312313-szenarien-in-rancher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übungen 3.12–3.13: Szenarien in Rancher
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ubung-314-break-fix-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übung 3.14: Break &amp; Fix Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tag-3-netzwerk-externe-systeme-rancher-challenge">Tag 3: Netzwerk, externe Systeme, Rancher, Challenge<a class="headerlink" href="#tag-3-netzwerk-externe-systeme-rancher-challenge" title="Permanent link">&para;</a></h1>
+<p><code>XX</code> steht für die eigene Teilnehmernummer. Zu Beginn läuft die Anwendung <code>shop</code> aus Tag 2 in beiden Projects in OpenShift; Rancher-Projects sind leer.</p>
+<p><strong>Fallbeispiel:</strong> Nach einer Netzwerkwartung bei der Super Shop GmbH treten Störungen auf, deren Ursache nicht im Release liegt. Am Nachmittag kommt das Logistikzentrum von Super Shop hinzu, das Kubernetes mit Rancher betreibt. Zum Abschluss hat der Support Bereitschaft an einem Aktionstag.</p>
+<p><strong>Vorbereitung im Web Terminal</strong> (das Terminal verliert nach längerer Inaktivität seine Dateien und Repositories):
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>lab<span class="w"> </span>https://cgamperl.github.io/k8s-lab/
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"role: frontend"</span><span class="w"> </span>&gt;<span class="w"> </span>web-values.yaml
+</code></pre></div></p>
+<hr />
+<h3 id="ubungen-3133-netzwerk-szenarien">Übungen 3.1–3.3: Netzwerk-Szenarien<a class="headerlink" href="#ubungen-3133-netzwerk-szenarien" title="Permanent link">&para;</a></h3>
+<p><strong>Ticket:</strong> SHOP-1030 · Seit der Netzwerkwartung am Wochenende ist der Shop zeitweise gestört.</p>
+<p>Der Trainer bringt die Anwendung aller Teilnehmer in einen fehlerhaften Zustand, wie an Tag 2. Diesmal liegt die Ursache auf dem Weg einer Anfrage. Vorgehen:</p>
+<ol>
+<li>Symptom feststellen: Was zeigt die Seite, was zeigt <code>/api/orders</code>? Welcher HTTP-Statuscode, und wer antwortet (Router, Frontend, API)?</li>
+<li>Den Weg prüfen: Route → Service → Endpoints → Pod → Aufruf zur API → externes System.</li>
+<li>Jedes Glied einzeln testen. <code>oc</code> steht nur im Web Terminal zur Verfügung; <code>curl</code> und <code>getent</code> auch im Terminal eines Pods (Konsole: Pod → Terminal), das die Sicht des jeweiligen Pods hat. Die Konsole zeigt dieselben Objekte unter <strong>Networking</strong>.</li>
+<li>Ursache benennen, beheben, prüfen, Protokoll ausfüllen.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Szenario</th>
+<th>Symptom (Statuscode, wer antwortet)</th>
+<th>Wo gefunden</th>
+<th>Ursache</th>
+<th>Behebung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3.2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3.3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dauer:</strong> ca. 15–20 min je Szenario.</p>
+<hr />
+<h3 id="ubung-34-ein-externes-system-ist-nicht-erreichbar">Übung 3.4: Ein externes System ist nicht erreichbar<a class="headerlink" href="#ubung-34-ein-externes-system-ist-nicht-erreichbar" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Eine Ursache außerhalb des Clusters erkennen und eingrenzen.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole, Web Terminal<br />
+<strong>Dauer:</strong> ca. 20 min<br />
+<strong>Ticket:</strong> SHOP-1031 · Der Shop zeigt keine Bestellungen, das Bestellsystem läuft laut IT-Betrieb.</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>Symptom auf der Seite und unter <code>/api/orders</code> feststellen.</li>
+<li>Pods, Services und Endpoints prüfen.</li>
+<li>Das Log der API über den Sidecar lesen.</li>
+<li>Die Adresse des Bestellsystems aus der ConfigMap <code>api-config</code> im Project <code>pXX-backend</code> ermitteln.</li>
+<li>Aus dem Web Terminal (Project <code>pXX-backend</code>) das Bestellsystem direkt aufrufen:
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-sv<span class="w"> </span>-m<span class="w"> </span><span class="m">5</span><span class="w"> </span>http://192.168.130.1:81XX/orders
+</code></pre></div></li>
+<li>Zum Vergleich einen anderen Port desselben Systems aufrufen: <code>curl -s -m 5 -o /dev/null -w "%{http_code}\n" http://192.168.130.1:8081/orders</code>.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Alle Objekte im Cluster sind fehlerfrei. Der eigene Port des Bestellsystems weist die Verbindung ab, der Vergleichsport antwortet. Die Ursache liegt außerhalb des Clusters.</p>
+<hr />
+<h3 id="ubung-35-eine-anfrage-an-die-it-formulieren">Übung 3.5: Eine Anfrage an die IT formulieren<a class="headerlink" href="#ubung-35-eine-anfrage-an-die-it-formulieren" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Für eine Firewall-Freigabe alle nötigen Angaben zusammenstellen.<br />
+<strong>Umgebung:</strong> Workbook<br />
+<strong>Dauer:</strong> ca. 10 min</p>
+<p><strong>Schritte:</strong> Für den Fall aus 3.4 eine Anfrage an die zuständige IT schreiben, die ohne Rückfrage bearbeitet werden kann.</p>
+<table>
+<thead>
+<tr>
+<th>Angabe</th>
+<th>Wert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quelle (wer baut die Verbindung auf)</td>
+<td></td>
+</tr>
+<tr>
+<td>Ziel (Adresse oder Hostname)</td>
+<td></td>
+</tr>
+<tr>
+<td>Port und Protokoll</td>
+<td></td>
+</tr>
+<tr>
+<td>Richtung</td>
+<td></td>
+</tr>
+<tr>
+<td>Beobachtung und Zeitpunkt</td>
+<td></td>
+</tr>
+<tr>
+<td>Nachweis (Befehl und Ausgabe)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Erwartetes Ergebnis:</strong> Eine Anfrage, die Quelle, Ziel, Port, Protokoll und Richtung nennt und mit der Ausgabe von <code>curl</code> belegt, dass die Verbindung abgewiesen wird.</p>
+<hr />
+<h3 id="ubung-36-welcher-pod-antwortet">Übung 3.6: Welcher Pod antwortet?<a class="headerlink" href="#ubung-36-welcher-pod-antwortet" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Die Verteilung von Anfragen auf mehrere Pods beobachten und erkennen, wann sie nicht stattfindet.<br />
+<strong>Umgebung:</strong> Web Terminal, OpenShift-Konsole<br />
+<strong>Dauer:</strong> ca. 15 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>Im Web Terminal mehrere Anfragen an die API senden und den antwortenden Pod ausgeben:
+    <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">8</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://api.pXX-backend:8080/orders<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.api_pod<span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</code></pre></div></li>
+<li>Die API auf 3 Pods skalieren (Konsole: Deployment <code>api</code>, Pfeil nach oben) und Schritt 1 wiederholen.</li>
+<li>Bei einem der API-Pods über <strong>Actions → Edit labels</strong> das Label <code>app.kubernetes.io/component=api</code> entfernen. Schritt 1 wiederholen und die Endpoints des Service <code>api</code> ansehen.</li>
+<li>Den Pod ohne Label löschen und die API wieder auf 2 Pods stellen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Die Antworten verteilen sich auf alle bereiten Pods. Der Pod ohne Label erscheint nicht mehr in den Antworten und nicht mehr in den Endpoints.</p>
+<p><strong>Frage zur Diskussion:</strong> Woran wäre zu erkennen, dass einer von drei Pods fehlerhaft antwortet, obwohl er als bereit gilt?</p>
+<hr />
+<h3 id="ubung-37-anmeldung-an-rancher">Übung 3.7: Anmeldung an Rancher<a class="headerlink" href="#ubung-37-anmeldung-an-rancher" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Die Rancher-Oberfläche kennenlernen.<br />
+<strong>Umgebung:</strong> Rancher<br />
+<strong>Dauer:</strong> ca. 10 min<br />
+<strong>Ticket:</strong> SHOP-1040 · Den Shop im Logistikzentrum installieren.</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>https://rancher.k8s.tectrain.at öffnen, <strong>Log in with Local User</strong>, Benutzer <code>pXX</code> mit demselben Passwort wie in OpenShift.</li>
+<li>Den Cluster <code>local</code> öffnen.</li>
+<li><strong>Cluster → Projects/Namespaces</strong> ansehen.</li>
+<li>Die Menüpunkte <strong>Workloads</strong>, <strong>Apps</strong>, <strong>Service Discovery</strong>, <strong>Storage</strong>, <strong>Policy</strong> aufklappen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Sichtbar ist nur das Project <code>pXX</code> mit den Namespaces <code>pXX-frontend</code> und <code>pXX-backend</code>. Beide sind leer.</p>
+<hr />
+<h3 id="ubung-38-die-anwendung-uber-apps-installieren">Übung 3.8: Die Anwendung über Apps installieren<a class="headerlink" href="#ubung-38-die-anwendung-uber-apps-installieren" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Das bekannte Chart in Rancher installieren.<br />
+<strong>Umgebung:</strong> Rancher<br />
+<strong>Dauer:</strong> ca. 20 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li><strong>Apps → Charts</strong>. Links unter <strong>Repository</strong> nur <code>k8s-lab</code> auswählen. Die Kachel <strong>shop</strong> öffnen.</li>
+<li><strong>Install</strong>. Namespace <code>pXX-backend</code>, Name <code>api</code>, Chart-Version <code>1.0.0</code>. <strong>Next</strong>, die Werte unverändert lassen, <strong>Install</strong>.</li>
+<li>Den Fortschritt im unteren Fenster verfolgen, bis die Ausgabe endet.</li>
+<li>Erneut installieren: Namespace <code>pXX-frontend</code>, Name <code>web</code>. Im YAML-Editor <code>role: api</code> in <code>role: frontend</code> ändern. <strong>Install</strong>.</li>
+<li><strong>Apps → Installed Apps</strong>: Status beider Apps prüfen (bei veraltetem Status die Seite neu laden).</li>
+<li><strong>Service Discovery → Ingresses</strong>: Den Host des Ingress <code>frontend</code> öffnen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Beide Apps zeigen <code>Deployed</code>. Die Seite unter <code>https://frontend-pXX-frontend.apps.k8s.tectrain.at</code> zeigt drei Bestellungen. Statt einer Route gibt es einen Ingress.</p>
+<hr />
+<h3 id="ubung-39-die-kubectl-shell">Übung 3.9: Die kubectl-Shell<a class="headerlink" href="#ubung-39-die-kubectl-shell" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Dieselben Befehle wie in OpenShift mit <code>kubectl</code> ausführen.<br />
+<strong>Umgebung:</strong> kubectl-Shell<br />
+<strong>Dauer:</strong> ca. 15 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li>Oben rechts das Symbol <strong>&gt;_</strong> (Kubectl Shell) anklicken und warten, bis „Connected“ erscheint.</li>
+<li>Eingeben:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+kubectl<span class="w"> </span>get<span class="w"> </span>ingress<span class="w"> </span>-n<span class="w"> </span>pXX-frontend
+kubectl<span class="w"> </span>describe<span class="w"> </span>svc<span class="w"> </span>api<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+helm<span class="w"> </span>list<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+helm<span class="w"> </span>version
+kubectl<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>namespaces
+</code></pre></div></li>
+<li>Die Ausgaben mit denen aus OpenShift vergleichen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> <code>kubectl</code> liefert dieselben Informationen wie <code>oc</code>. <code>helm version</code> zeigt Version 4. <code>kubectl auth can-i create namespaces</code> antwortet <code>yes</code>; eine zusätzliche Regel im Cluster erlaubt neue Namespaces aber nur im eigenen Project.</p>
+<hr />
+<h3 id="ubung-310-upgrade-und-rollback-in-rancher">Übung 3.10: Upgrade und Rollback in Rancher<a class="headerlink" href="#ubung-310-upgrade-und-rollback-in-rancher" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Updates und Rollbacks in der Rancher-Oberfläche durchführen.<br />
+<strong>Umgebung:</strong> Rancher, kubectl-Shell<br />
+<strong>Dauer:</strong> ca. 20 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li><strong>Apps → Installed Apps</strong>, App <code>api</code>, Menü <strong>⋮ → Edit / Change Version</strong>. Version <code>1.1.0</code> wählen, <strong>Next</strong>, die Zeile <code>role</code> im YAML-Editor ansehen und <strong>Upgrade</strong> wählen.</li>
+<li>Status und Seite prüfen (API-Version 1.1.0).</li>
+<li>Das Menü <strong>⋮</strong> der App <code>api</code> erneut öffnen: Es bietet keinen Rollback. In der kubectl-Shell zurückrollen:
+    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>k8s-lab<span class="w"> </span>https://cgamperl.github.io/k8s-lab/
+helm<span class="w"> </span><span class="nb">history</span><span class="w"> </span>api<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+helm<span class="w"> </span>rollback<span class="w"> </span>api<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+helm<span class="w"> </span><span class="nb">history</span><span class="w"> </span>api<span class="w"> </span>-n<span class="w"> </span>pXX-backend
+</code></pre></div></li>
+<li>Das Frontend mit der Kommandozeile aktualisieren:
+    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"role: frontend"</span><span class="w"> </span>&gt;<span class="w"> </span>web-values.yaml
+helm<span class="w"> </span>upgrade<span class="w"> </span>web<span class="w"> </span>k8s-lab/shop<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0<span class="w"> </span>-n<span class="w"> </span>pXX-frontend<span class="w"> </span>-f<span class="w"> </span>web-values.yaml
+</code></pre></div></li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Nach dem Upgrade API 1.1.0, nach dem Rollback wieder 1.0.0; <code>helm history</code> zeigt drei Revisionen, die letzte mit „Rollback to 1“. Das Frontend läuft mit Version 1.1.0 und behält seine Rolle.</p>
+<hr />
+<h3 id="ubung-311-zusatz-pod-security-in-kubernetes">Übung 3.11 (Zusatz): Pod Security in Kubernetes<a class="headerlink" href="#ubung-311-zusatz-pod-security-in-kubernetes" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Das Verhalten eines root-Images in Kubernetes mit OpenShift vergleichen.<br />
+<strong>Umgebung:</strong> Rancher<br />
+<strong>Dauer:</strong> ca. 15 min</p>
+<p><strong>Schritte:</strong></p>
+<ol>
+<li><strong>Workloads → Deployments → Create</strong>. Namespace <code>pXX-frontend</code>, Name <code>nginx</code>, Container Image <code>nginx:1.27-alpine</code>. <strong>Create</strong>.</li>
+<li>Status und Logs des Pods ansehen.</li>
+<li>In der kubectl-Shell: <code>kubectl exec -n pXX-frontend deploy/nginx -- id</code>.</li>
+<li>Das Deployment wieder löschen.</li>
+</ol>
+<p><strong>Erwartetes Ergebnis:</strong> Anders als in OpenShift (Übung 1.13) startet das Image und läuft als <code>uid=0(root)</code>. Beim Anlegen kann eine Warnung „would violate PodSecurity restricted“ erscheinen; sie verhindert nichts. Der Namespace erlaubt root-Container (Pod Security <code>baseline</code>), verbietet aber privilegierte Container und Zugriff auf den Node.</p>
+<hr />
+<h3 id="ubungen-312313-szenarien-in-rancher">Übungen 3.12–3.13: Szenarien in Rancher<a class="headerlink" href="#ubungen-312313-szenarien-in-rancher" title="Permanent link">&para;</a></h3>
+<p>Vorbereitung in der kubectl-Shell (sie verliert beim Schließen Dateien und Repositories):
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>k8s-lab<span class="w"> </span>https://cgamperl.github.io/k8s-lab/
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"role: frontend"</span><span class="w"> </span>&gt;<span class="w"> </span>web-values.yaml
+</code></pre></div></p>
+<p>Der Trainer startet zwei Szenarien in den Rancher-Projects. Vorgehen wie an Tag 2, mit <code>kubectl</code> und der Rancher-Oberfläche (Pod → ⋮ → View Logs, Events unter <strong>Cluster → Events</strong> oder im Pod).</p>
+<table>
+<thead>
+<tr>
+<th>Szenario</th>
+<th>Symptom</th>
+<th>Wo gefunden</th>
+<th>Ursache</th>
+<th>Unterschied zu OpenShift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.12</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3.13</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dauer:</strong> ca. 15 min je Szenario.</p>
+<hr />
+<h3 id="ubung-314-break-fix-challenge">Übung 3.14: Break &amp; Fix Challenge<a class="headerlink" href="#ubung-314-break-fix-challenge" title="Permanent link">&para;</a></h3>
+<p><strong>Ziel:</strong> Fehler ohne Anleitung finden und beheben.<br />
+<strong>Umgebung:</strong> OpenShift-Konsole, Web Terminal<br />
+<strong>Dauer:</strong> ca. 60 min<br />
+<strong>Ticket:</strong> SHOP-1050 · Bereitschaft am Aktionstag: eingehende Störungen bearbeiten.</p>
+<p><strong>Regeln:</strong></p>
+<ol>
+<li>Der Trainer setzt die Anwendung jedes Teilnehmers in einen fehlerhaften Zustand. Die Fehler sind nicht für alle gleich.</li>
+<li>Ziel ist eine funktionierende Seite mit drei Bestellungen. Der Trainer sieht den Zustand aller Anwendungen auf einer Übersicht.</li>
+<li>Nach jeder Behebung den Trainer informieren; es folgt der nächste Fehler.</li>
+<li>Erlaubt sind alle Werkzeuge des Kurses und das eigene Protokoll. Nicht erlaubt: die Anwendung löschen und neu installieren.</li>
+<li>Pro behobenem Fehler: Symptom, Ursache und Behebung in einem Satz notieren.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Runde</th>
+<th>Symptom</th>
+<th>Ursache</th>
+<th>Behebung</th>
+<th>Zeit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Zurück zum Seitenanfang
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.top", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
