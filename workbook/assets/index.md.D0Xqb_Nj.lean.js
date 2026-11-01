@@ -1,0 +1,1 @@
+import{_ as a,o as n,c as t,a3 as r}from"./chunks/framework.WnkSrLAX.js";const g=JSON.parse('{"title":"Übungen","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),i={name:"index.md"};function l(o,e,s,d,u,c){return n(),t("div",null,[...e[0]||(e[0]=[r("",4)])])}const m=a(i,[["render",l]]);export{g as __pageData,m as default};
