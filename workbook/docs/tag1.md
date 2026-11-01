@@ -2,9 +2,10 @@
 
 ## Hinweise zu den Übungen
 
-::: warning Eigene Nummer einsetzen
-Befehle und Werte mit `XX` vor dem Ausführen anpassen: `pXX` wird z. B. zu `p07`, der Port `81XX` zu `8107`. Kopierte Befehle enthalten noch `XX`.
-:::
+<div class="warning custom-block xx-hint">
+<p class="custom-block-title">Eigene Nummer eintragen</p>
+<p>Oben in der Kopfzeile unter <strong>Nr.</strong> die eigene Teilnehmernummer eintragen. Die Seite setzt sie dann in alle Befehle und Werte ein, auch beim Kopieren. Ohne Eintrag sind <code>XX</code> selbst zu ersetzen: <code>pXX</code> wird z. B. zu <code>p07</code>, der Port <code>81XX</code> zu <code>8107</code>.</p>
+</div>
 
 - `XX` steht für die eigene Teilnehmernummer, zweistellig: Teilnehmer 7 verwendet `p07`, die Projects `p07-frontend` und `p07-backend` und den Port `8107`.
 - Zugangsdaten werden zu Kursbeginn bekanntgegeben; das Passwort ist für alle Teilnehmer gleich. Benutzername und Passwort gelten für die OpenShift-Konsole und für Rancher.
@@ -228,7 +229,7 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
 4. Das Häkchen bei **Create a route** entfernen. Auf **Create** klicken.
 5. In der Topology den Kreis `api` anklicken und den Status beobachten.
 6. Rechts in der Seitenleiste, Reiter **Resources**, beim Pod auf **View logs** klicken.
-7. Links **Workloads → Deployments → api** öffnen, Reiter **Environment**. Eine Variable `LEGACY_URL` mit dem Wert `http://192.168.130.1:81XX` hinzufügen (für `p07`: `8107`) und **Save**. `XX` durch die eigene Nummer ersetzen.
+7. Links **Workloads → Deployments → api** öffnen, Reiter **Environment**. Eine Variable `LEGACY_URL` mit dem Wert `http://192.168.130.1:81XX` hinzufügen (für `p07`: `8107`) und **Save**. <span class="xx-hint"><code>XX</code> durch die eigene Nummer ersetzen.</span>
 8. Zurück in der Topology den Kreis `api` beobachten.
 
 **Erwartetes Ergebnis:** Nach Schritt 4 startet der Pod und stürzt wiederholt ab: Der Status wechselt zwischen `Error` und `CrashLoopBackOff`, der Ring um den Kreis ist dunkel. Das Log zeigt `FATAL: required environment variable LEGACY_URL is not set`. Nach Schritt 7 entsteht ein neuer Pod mit dem Status `Running`, der Ring wird blau.
@@ -286,7 +287,7 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
 1. Oben im Feld **Project** das Project `pXX-frontend` wählen, dann **+ → Container images**.
 2. **Image name from external registry:** `ghcr.io/cgamperl/k8s-lab/frontend:1.0.0`.
 3. **Application name:** `shop`, **Name:** `frontend`.
-4. **Show advanced Deployment option** aufklappen und eine Umgebungsvariable `API_URL` mit dem Wert `http://api.pXX-backend.svc.cluster.local:8080` eintragen. `XX` durch die eigene Nummer ersetzen.
+4. **Show advanced Deployment option** aufklappen und eine Umgebungsvariable `API_URL` mit dem Wert `http://api.pXX-backend.svc.cluster.local:8080` eintragen. <span class="xx-hint"><code>XX</code> durch die eigene Nummer ersetzen.</span>
 5. **Create a route** bleibt angehakt. **Create**.
 6. In der Topology am Kreis `frontend` das Symbol für die Route (Pfeil nach rechts oben) anklicken.
 7. Die Seite mehrmals neu laden und die angezeigte API-Instanz beobachten.
@@ -338,7 +339,7 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
 **Dauer:** ca. 10 min
 
 **Schritte:**
-1. Einen Container starten, der die Route der eigenen Anwendung aufruft. `XX` durch die eigene Nummer ersetzen.
+1. Einen Container starten, der die Route der eigenen Anwendung aufruft. <span class="xx-hint"><code>XX</code> durch die eigene Nummer ersetzen.</span>
    ```powershell
    docker run --rm ghcr.io/cgamperl/k8s-lab/frontend:1.0.0 curl -s https://frontend-pXX-frontend.apps.a.openshift.tectrain.at/api/orders
    ```

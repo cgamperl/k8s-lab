@@ -12,6 +12,12 @@ holds the sidebar and the German UI labels (VitePress, default theme).
   the Pages build). GitHub Pages lets browsers cache pages for up to
   10 minutes; a page that is already open may need a reload with Ctrl+F5.
 - The sidebar lists every `### Übung …` heading of a day (appendix: `## …`); it is generated from the files at build time. A new page needs one `page(...)` line in `config.mts`.
+- Participant number: the field **Nr.** in the header (`docs/.vitepress/theme/`)
+  replaces `pXX` and `81XX` on every page, including what the copy buttons
+  copy. The number is kept in the browser's localStorage; `?nr=07` in the URL
+  sets it as well. Elements with the class `xx-hint` (the "replace XX" notes)
+  are hidden once a number is set. Write placeholders only as `pXX` or
+  `81XX`; other forms are not replaced.
 - `http://localhost:…` links are not checked (Docker Desktop on the training
   laptop); any other dead link fails the build.
 

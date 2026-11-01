@@ -2,9 +2,10 @@
 
 `XX` steht wie an Tag 1 für die eigene Teilnehmernummer. Die Projects `pXX-frontend` und `pXX-backend` sind zu Beginn leer.
 
-::: warning Eigene Nummer einsetzen
-Befehle und Werte mit `XX` vor dem Ausführen anpassen: `pXX` wird z. B. zu `p07`, der Port `81XX` zu `8107`. Kopierte Befehle enthalten noch `XX`.
-:::
+<div class="warning custom-block xx-hint">
+<p class="custom-block-title">Eigene Nummer eintragen</p>
+<p>Oben in der Kopfzeile unter <strong>Nr.</strong> die eigene Teilnehmernummer eintragen. Die Seite setzt sie dann in alle Befehle und Werte ein, auch beim Kopieren. Ohne Eintrag sind <code>XX</code> selbst zu ersetzen: <code>pXX</code> wird z. B. zu <code>p07</code>, der Port <code>81XX</code> zu <code>8107</code>.</p>
+</div>
 
 **Fallbeispiel:** Die Entwicklung liefert den Shop für die Super Shop GmbH ab heute als Helm Chart. Der Tag folgt der Installation, dem Update auf eine neue Version und den ersten Störungsmeldungen des Vertriebs.
 

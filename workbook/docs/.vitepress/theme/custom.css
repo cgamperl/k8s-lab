@@ -1,0 +1,4 @@
+/* Hints about replacing XX disappear once a participant number is set. */
+html.has-participant .xx-hint {
+  display: none;
+}
