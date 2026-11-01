@@ -116,16 +116,20 @@ Helm-Repository der Schulung: `https://cgamperl.github.io/k8s-lab/`, Chart `shop
 
 **Schritte:**
 1. In der Konsole die Topology von `pXX-backend` öffnen und daneben das Web Terminal.
-2. Im Web Terminal:
+2. Im Web Terminal die Update-Strategie des Deployments anzeigen:
+   ```sh
+   oc get deployment api -n pXX-backend -o jsonpath='{.spec.strategy}{"\n"}'
+   ```
+3. Upgrade ausführen und verfolgen:
    ```sh
    helm upgrade api lab/shop --version 1.1.0 -n pXX-backend
    oc rollout status deployment/api -n pXX-backend
    oc get replicasets -n pXX-backend
    ```
-3. Die Seite der Anwendung neu laden.
-4. `helm history api -n pXX-backend`.
+4. Die Seite der Anwendung neu laden.
+5. `helm history api -n pXX-backend`.
 
-**Erwartetes Ergebnis:** Die Pods werden einzeln ersetzt („1 out of 2 new replicas have been updated“). Danach gibt es zwei ReplicaSets, das alte mit 0 Pods. Die Seite zeigt die API-Version 1.1.0. Der Verlauf enthält zwei Revisionen.
+**Erwartetes Ergebnis:** Die Strategie ist `RollingUpdate` mit `maxSurge` und `maxUnavailable` von je `25%`. Bei zwei Replikas ergibt das aufgerundet einen zusätzlichen Pod und abgerundet keinen fehlenden: Während des Updates laufen kurz drei Pods, nie weniger als zwei. Die Pods werden einzeln ersetzt („1 out of 2 new replicas have been updated“). Danach gibt es zwei ReplicaSets, das alte mit 0 Pods. Die Seite zeigt die API-Version 1.1.0. Der Verlauf enthält zwei Revisionen.
 
 ---
 
