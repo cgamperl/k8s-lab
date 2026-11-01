@@ -72,6 +72,32 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
 **Umgebung:** Docker Desktop
 **Dauer:** ca. 15 min
 
+Das Image `api` wurde aus diesem Containerfile gebaut (gleiches Format wie ein Dockerfile):
+
+```dockerfile
+FROM docker.io/library/python:3.12-slim
+
+ARG APP_VERSION=dev
+ENV APP_VERSION=$APP_VERSION \
+    PYTHONUNBUFFERED=1 \
+    PORT=8080 \
+    LOG_FILE=/var/log/app/api.log
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py .
+# The log directory is normally an emptyDir volume; group 0 makes it writable
+# for the arbitrary UID that OpenShift assigns.
+RUN mkdir -p /var/log/app && chgrp -R 0 /var/log/app && chmod -R g=u /var/log/app
+
+USER 1001
+EXPOSE 8080
+CMD ["python", "app.py"]
+```
+
+Die Übung prüft im laufenden Container, was die Zeilen `WORKDIR`/`COPY`, `RUN mkdir … chgrp …` und `USER 1001` bewirken.
+
 **Schritte:**
 1. Eine Shell im laufenden Container `api` öffnen. Die Eingabeaufforderung wechselt zu `$`; alle folgenden Befehle bis `exit` laufen im Container:
    ```powershell
@@ -106,7 +132,7 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
    docker image inspect ghcr.io/cgamperl/k8s-lab/api:1.0.0 --format "User={{.Config.User}} Ports={{.Config.ExposedPorts}} Cmd={{.Config.Cmd}}"
    ```
 
-**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`, das Arbeitsverzeichnis ist `/app` mit `app.py`. Der Rechnername ist der Anfang der Container-ID. `/tmp/note.txt` lässt sich anlegen, `/app/note.txt` nicht (`Permission denied`): Der Prozess läuft nicht als root und darf nur in freigegebene Verzeichnisse schreiben: `/app` ist nur für den Besitzer root beschreibbar (`drwxr-xr-x`), `/var/log/app` auch für die Gruppe root (`drwxrwxr-x`), der der Benutzer 1001 angehört. In `/var/log/app` liegt die Logdatei `api.log` der API. `docker diff` listet `/tmp/note.txt` und `/var/log/app/api.log` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
+**Erwartetes Ergebnis:** `id` zeigt `uid=1001 gid=0(root)`, das Arbeitsverzeichnis ist `/app` mit `app.py`. Der Rechnername ist der Anfang der Container-ID. `/tmp/note.txt` lässt sich anlegen, `/app/note.txt` nicht (`Permission denied`): Der Prozess läuft nicht als root und darf nur in freigegebene Verzeichnisse schreiben: `/app` ist nur für den Besitzer root beschreibbar (`drwxr-xr-x`), `/var/log/app` auch für die Gruppe root (`drwxrwxr-x`), der der Benutzer 1001 angehört. Das sind die Zeilen `USER 1001` und `chgrp -R 0 … chmod -R g=u` des Containerfiles. In `/var/log/app` liegt die Logdatei `api.log` der API. `docker diff` listet `/tmp/note.txt` und `/var/log/app/api.log` als hinzugefügt (`A`). Im neuen Container existiert die Datei nicht mehr. `docker history` zeigt die Anweisungen, aus denen das Image gebaut wurde, mit `USER 1001`, `EXPOSE 8080` und `CMD ["python" "app.py"]`.
 
 ---
 
@@ -224,7 +250,7 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
    ```
 4. Im Reiter **YAML** die Abschnitte `resources` und `securityContext` des Containers suchen.
 
-**Erwartetes Ergebnis:** `id` zeigt eine hohe, zufällige Benutzer-ID (z. B. `uid=1001050000`) und `gid=0(root)`, nicht `1001` wie in Docker. `resources` enthält Werte, obwohl keine angegeben wurden; sie stammen aus der Vorgabe des Projects. `resolv.conf` enthält eine Zeile `search pXX-backend.svc.cluster.local …`.
+**Erwartetes Ergebnis:** `id` zeigt eine hohe, zufällige Benutzer-ID (z. B. `uid=1001050000`) und `gid=0(root)`, nicht `1001` wie in Docker. Die Gruppe 0 bleibt; deshalb kann die API in `/var/log/app` schreiben, das laut Containerfile für die Gruppe 0 beschreibbar ist (Übung 1.3). `resources` enthält Werte, obwohl keine angegeben wurden; sie stammen aus der Vorgabe des Projects. `resolv.conf` enthält eine Zeile `search pXX-backend.svc.cluster.local …`.
 
 ---
 
