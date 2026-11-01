@@ -3,6 +3,10 @@ import { nextTick, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vitepress'
 import { applyNumber, loadNumber, normalize, saveNumber } from './participant'
 
+// `text` is what the field shows while typing ("1"), `nr` the number used in
+// the page ("01"). Showing `nr` in the field would turn "1" into "01" and make
+// a second digit impossible.
+const text = ref('')
 const nr = ref('')
 const route = useRoute()
 
@@ -14,15 +18,16 @@ function apply() {
 
 function onInput(event: Event) {
   const input = event.target as HTMLInputElement
-  const value = input.value.replace(/\D/g, '').slice(0, 2)
-  input.value = value
-  nr.value = normalize(value)
+  text.value = input.value.replace(/\D/g, '').slice(0, 2)
+  input.value = text.value
+  nr.value = normalize(text.value)
   saveNumber(nr.value)
   apply()
 }
 
 onMounted(() => {
   nr.value = loadNumber()
+  text.value = nr.value
   apply()
 })
 
@@ -34,7 +39,7 @@ watch(() => route.path, () => nextTick(apply))
   <label class="participant" title="Eigene Teilnehmernummer; ersetzt pXX und 81XX auf allen Seiten">
     <span class="label">Nr.</span>
     <input
-      :value="nr"
+      :value="text"
       inputmode="numeric"
       maxlength="2"
       placeholder="XX"
