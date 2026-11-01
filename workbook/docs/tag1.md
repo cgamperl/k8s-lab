@@ -298,13 +298,13 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
 **Dauer:** ca. 15 min
 
 **Schritte:**
-1. **Networking → Services → api** (Project `pXX-backend`). Unter **Details** Selector, Port und Target port notieren, dann Reiter **Pods** öffnen.
+1. **Networking → Services → api** (Project `pXX-backend`). Im Reiter **Details** den **Pod selector** notieren, rechts unter **Service port mapping** die Spalten **Port** und **Pod port or name**. „Pod port or name“ ist der Port im Container, an den der Service weiterleitet (`targetPort` im YAML). Danach den Reiter **Pods** öffnen.
 2. **Networking → Routes → frontend** (Project `pXX-frontend`): Ziel-Service und Location notieren.
 3. Einen der API-Pods öffnen und über **Actions → Edit labels** das Label `app=api` entfernen. **Save**.
 4. Erneut den Reiter **Pods** des Service `api` und die Pod-Liste des Projects ansehen.
 5. Den Pod ohne Label über **Actions → Delete Pod** löschen.
 
-**Erwartetes Ergebnis:** Der Service wählt seine Pods über den Selector `app=api` und leitet Port 8080 auf Port 8080 der Container. Nach Schritt 3 gehört der Pod nicht mehr zum Service und nicht mehr zum ReplicaSet: Der Service zeigt drei andere Pods, das ReplicaSet hat einen Ersatz gestartet, und im Project laufen vier API-Pods.
+**Erwartetes Ergebnis:** Der Service wählt seine Pods über den Selector `app=api, deployment=api`; ein Pod gehört nur dazu, wenn er beide Labels trägt. Er leitet Port 8080 auf Port 8080 der Container. Nach Schritt 3 gehört der Pod nicht mehr zum Service und nicht mehr zum ReplicaSet: Der Service zeigt drei andere Pods, das ReplicaSet hat einen Ersatz gestartet, und im Project laufen vier API-Pods.
 
 ---
 
