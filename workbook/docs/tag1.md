@@ -31,10 +31,11 @@ Browser ──► frontend ──/api/──► api ──► Bestellsystem
 **Dauer:** ca. 10 min
 
 **Schritte:**
-1. https://console.a.openshift.tectrain.at öffnen. Falls eine Auswahl erscheint, „developer“ wählen.
-2. Mit dem eigenen Benutzer `pXX` anmelden. Eine angebotene Einführungstour mit „Skip tour“ überspringen.
-3. Links **Home → Projects** öffnen.
-4. Links **Workloads → Topology** öffnen und oben im Feld **Project** nacheinander beide Projects auswählen.
+1. In dieser Seite oben unter **Nr.** die eigene Teilnehmernummer eintragen.
+2. https://console.a.openshift.tectrain.at öffnen. Falls eine Auswahl erscheint, „developer“ wählen.
+3. Mit dem eigenen Benutzer `pXX` anmelden. Eine angebotene Einführungstour mit „Skip tour“ überspringen.
+4. Links **Home → Projects** öffnen.
+5. Links **Workloads → Topology** öffnen und oben im Feld **Project** nacheinander beide Projects auswählen.
 
 **Erwartetes Ergebnis:** Genau zwei Projects sind sichtbar: `pXX-frontend` und `pXX-backend`. Die Topology beider Projects ist leer.
 
