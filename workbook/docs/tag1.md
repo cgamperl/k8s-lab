@@ -348,6 +348,26 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
 
 **Erwartetes Ergebnis:** Die Antwort enthält die Bestellungen als JSON. Der Weg vom Laptop in den Cluster führt über HTTPS auf Port 443 des Routers; der umgekehrte Weg ist nicht möglich, weil der Laptop von außen nicht erreichbar ist.
 
+**Weg der Anfrage:**
+
+```text
+Laptop: Container mit curl
+  │  1. DNS: frontend-pXX-frontend.apps.a.openshift.tectrain.at → öffentliche Adresse
+  │  2. HTTPS, Port 443, durch Firmennetz und Proxy
+  ▼
+Load Balancer vor dem Cluster
+  ▼
+Router (OpenShift)            3. Zertifikat *.apps.a.openshift.tectrain.at, TLS endet hier
+  │                           4. Hostname → Route frontend
+  ▼
+Service frontend → Pod frontend (nginx)
+  │                           5. /api/orders → /orders an API_URL
+  ▼
+Service api (pXX-backend) → Pod api → Bestellsystem
+```
+
+Jede Nummer ist eine Stelle, an der die Anfrage scheitern kann: 1 Name nicht auflösbar, 2 Firewall oder Proxy sperrt, 3 Zertifikatswarnung, 4 keine passende Route (Fehlerseite des Routers), 5 Seite lädt, aber die Bestellungen fehlen (`API_URL`, Service ohne Endpoints).
+
 ---
 
 ### Übung 1.13 (Zusatz): Ein Image aus Docker Hub
