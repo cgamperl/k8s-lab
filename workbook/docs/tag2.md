@@ -2,6 +2,10 @@
 
 `XX` steht wie an Tag 1 für die eigene Teilnehmernummer. Die Projects `pXX-frontend` und `pXX-backend` sind zu Beginn leer.
 
+::: warning Eigene Nummer einsetzen
+Befehle und Werte mit `XX` vor dem Ausführen anpassen: `pXX` wird z. B. zu `p07`, der Port `81XX` zu `8107`. Kopierte Befehle enthalten noch `XX`.
+:::
+
 **Fallbeispiel:** Die Entwicklung liefert den Shop für die Super Shop GmbH ab heute als Helm Chart. Der Tag folgt der Installation, dem Update auf eine neue Version und den ersten Störungsmeldungen des Vertriebs.
 
 Helm-Repository der Schulung: `https://cgamperl.github.io/k8s-lab/`, Chart `shop`. Die Anwendung wird zweimal aus demselben Chart installiert:

@@ -2,6 +2,10 @@
 
 `XX` steht für die eigene Teilnehmernummer. Zu Beginn läuft die Anwendung `shop` aus Tag 2 in beiden Projects in OpenShift; Rancher-Projects sind leer.
 
+::: warning Eigene Nummer einsetzen
+Befehle und Werte mit `XX` vor dem Ausführen anpassen: `pXX` wird z. B. zu `p07`, der Port `81XX` zu `8107`. Kopierte Befehle enthalten noch `XX`.
+:::
+
 **Fallbeispiel:** Nach einer Netzwerkwartung bei der Super Shop GmbH treten Störungen auf, deren Ursache nicht im Release liegt. Am Nachmittag kommt das Logistikzentrum von Super Shop hinzu, das Kubernetes mit Rancher betreibt. Zum Abschluss hat der Support Bereitschaft an einem Aktionstag.
 
 **Vorbereitung im Web Terminal** (das Terminal verliert nach längerer Inaktivität seine Dateien und Repositories):
@@ -45,7 +49,7 @@ Der Trainer bringt die Anwendung aller Teilnehmer in einen fehlerhaften Zustand,
 2. Pods, Services und Endpoints prüfen.
 3. Das Log der API über den Sidecar lesen.
 4. Die Adresse des Bestellsystems aus der ConfigMap `api-config` im Project `pXX-backend` ermitteln.
-5. Aus dem Web Terminal (Project `pXX-backend`) das Bestellsystem direkt aufrufen:
+5. Aus dem Web Terminal (Project `pXX-backend`) das Bestellsystem direkt aufrufen. `XX` durch die eigene Nummer ersetzen.
    ```sh
    curl -sv -m 5 http://192.168.130.1:81XX/orders
    ```
@@ -83,7 +87,7 @@ Der Trainer bringt die Anwendung aller Teilnehmer in einen fehlerhaften Zustand,
 **Dauer:** ca. 15 min
 
 **Schritte:**
-1. Im Web Terminal mehrere Anfragen an die API senden und den antwortenden Pod ausgeben:
+1. Im Web Terminal mehrere Anfragen an die API senden und den antwortenden Pod ausgeben. `XX` durch die eigene Nummer ersetzen.
    ```sh
    for i in 1 2 3 4 5 6 7 8; do curl -s http://api.pXX-backend:8080/orders | jq -r .api_pod; done
    ```
