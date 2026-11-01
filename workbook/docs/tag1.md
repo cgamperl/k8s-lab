@@ -322,7 +322,7 @@ Docker legt den Ordner `logs` im aktuellen Verzeichnis an. Darin liegt danach di
 
 **Schritte:**
 1. Im Project `pXX-frontend` den Pod `frontend-…` öffnen, Reiter **Terminal**.
-2. Nacheinander eingeben (`XX` ersetzen):
+2. Nacheinander eingeben. <span class="xx-hint"><code>XX</code> durch die eigene Nummer ersetzen.</span>
    ```sh
    curl -s -m 5 http://api:8080/orders
    curl -s -m 5 http://api.pXX-backend:8080/orders
