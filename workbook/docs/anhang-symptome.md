@@ -14,9 +14,9 @@ Nachschlagetabelle für die Fehlersuche in Kubernetes und OpenShift. Die Spalte 
 | `CrashLoopBackOff`, Log nennt fehlende Variable oder Datei | Konfiguration fehlt oder heißt anders (ConfigMap, Secret, Variable) | Log des vorigen Laufs (Konsole: „Previous log“, CLI: `--previous`); Environment; ConfigMap |
 | `CrashLoopBackOff`, Log „Permission denied“ | Image erwartet root oder schreibt in nicht beschreibbare Verzeichnisse (OpenShift: zufällige UID) | Log des vorigen Laufs; Basis-Image |
 | `CreateContainerConfigError` | referenzierte ConfigMap/Secret fehlt; Sicherheitsregel (z. B. `runAsNonRoot`) verhindert den Start | Events |
-| Letzter Status `OOMKilled`, Exit-Code 137 | Speicherlimit zu niedrig für die Anwendung | Details/YAML: Last State; Metrics |
+| Letzter Status `OOMKilled` oder `Error`, Exit-Code 137 | Speicherlimit zu niedrig für die Anwendung | Details/YAML: Last State; Metrics |
 | Häufige Neustarts, Events „Liveness probe failed“ | Liveness Probe prüft falschen Pfad/Port oder ist zu streng | Events; Probe im YAML; Endpunkt im Container aufrufen |
-| `Running`, aber `READY 0/1` | Readiness Probe schlägt fehl (falscher Pfad, Anwendung nicht bereit, Abhängigkeit fehlt) | Events „Readiness probe failed“; Probe im YAML |
+| `Running`, aber `READY 0/1` | Readiness Probe schlägt fehl (falscher Pfad, Anwendung nicht bereit, Abhängigkeit fehlt) | Events „Readiness probe failed“; Probe im YAML; andere Probe desselben Containers vergleichen; Endpunkt im Container aufrufen (`curl localhost:<port>/<pfad>`) |
 | Pod hängt in `Terminating` | Anwendung beendet sich nicht; Finalizer; Node nicht erreichbar | Events; Details |
 
 ## Erreichbarkeit

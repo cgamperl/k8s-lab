@@ -235,4 +235,5 @@ Protokoll pro Szenario:
 
 Hinweise:
 - Ein Rollback ist nur möglich, wenn das Release eine vorige, funktionierende Revision hat. `helm history` zeigt das.
+- Schlägt eine Probe fehl, lässt sich der richtige Endpunkt im Cluster eingrenzen: die andere Probe desselben Containers im YAML vergleichen (eine erfolgreiche Probe zeigt einen Pfad, den die Anwendung bedient); beide Pfade aus dem Pod-Terminal aufrufen, z. B. `curl -s -o /dev/null -w '%{http_code}\n' http://localhost:8080/<pfad>` (404: Server antwortet, Pfad unbekannt); die in Übung 2.9 notierten Werte heranziehen.
 - Die Tabelle im Anhang „Symptome und typische Ursachen“ hilft bei der Einordnung.
