@@ -17,9 +17,58 @@ echo "role: frontend" > web-values.yaml
 
 ---
 
+### Übung 3.0: Die Kette einer Anfrage
+
+**Ziel:** Jedes Glied auf dem Weg einer Anfrage im fehlerfreien Zustand prüfen und die Ergebnisse als Vergleich für die Szenarien 3.1–3.4 festhalten.
+**Umgebung:** Web Terminal
+**Dauer:** ca. 15 min
+
+**Schritte:** <span class="xx-hint"><code>XX</code> durch die eigene Nummer ersetzen.</span>
+1. Seite und API getrennt von außen aufrufen:
+   ```sh
+   R=https://frontend-pXX-frontend.apps.a.openshift.tectrain.at
+   for p in / /api/orders; do curl -s -o /dev/null -w "$p %{http_code}\n" $R$p; done
+   ```
+2. Route, Service und Endpoints des Frontends ansehen:
+   ```sh
+   oc get route,svc,endpoints -n pXX-frontend
+   ```
+3. Den Namen der API aus einem Frontend-Pod auflösen. `oc exec` führt den Befehl im Pod aus, also aus dem Namespace des Aufrufers:
+   ```sh
+   oc exec -n pXX-frontend deploy/frontend -- getent hosts api.pXX-backend
+   ```
+4. Die API aus einem Frontend-Pod aufrufen:
+   ```sh
+   oc exec -n pXX-frontend deploy/frontend -- curl -s -o /dev/null -w '%{http_code}\n' http://api.pXX-backend:8080/orders
+   ```
+5. Die Endpoints der API ansehen:
+   ```sh
+   oc get endpoints api -n pXX-backend
+   ```
+6. Die Antwort der API über die Route lesen:
+   ```sh
+   curl -s $R/api/orders | head -c 200; echo
+   ```
+7. Die Ergebnisse in die Tabelle eintragen.
+
+| Glied | Befehl | Ergebnis |
+|---|---|---|
+| Browser → Route → Frontend | Schritt 1, `/` | |
+| Route → Service → Endpoints | Schritt 2 | |
+| Name der API (DNS) | Schritt 3 | |
+| Frontend → API | Schritt 4 | |
+| Endpoints der API | Schritt 5 | |
+| API → Bestellsystem | Schritt 6, Feld `source` | |
+
+**Erwartetes Ergebnis:** Seite und `/api/orders` antworten mit `200`. Die Route verweist auf den Service `frontend`, beide Services haben je zwei Endpoints. `api.pXX-backend` löst zur ClusterIP des Service `api` auf; diese unterscheidet sich von der ClusterIP des Service `frontend`, da jeder Service eine eigene Adresse erhält. Die Antwort aus Schritt 6 ist JSON der API mit `api_version`, `api_pod` und `source: order-system (port 81XX)`. Die Warnung `v1 Endpoints is deprecated` betrifft nur die Schnittstelle; die Ausgabe ist gültig.
+
+---
+
 ### Übungen 3.1–3.3: Netzwerk-Szenarien
 
 **Ticket:** SHOP-1030 · Seit der Netzwerkwartung am Wochenende ist der Shop zeitweise gestört.
+
+In jedem Szenario ist genau ein Glied der Kette aus Übung 3.0 gestört. Die Ergebnisse aus 3.0 dienen als Vergleich.
 
 Der Trainer bringt die Anwendung aller Teilnehmer in einen fehlerhaften Zustand, wie an Tag 2. Diesmal liegt die Ursache auf dem Weg einer Anfrage. Vorgehen:
 
